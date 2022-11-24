@@ -7,6 +7,7 @@ public interface IDonneur {
     
     // Create
     public String MdlDonneur_Enregistrer(Donneur donneur);
+    public int MdlDonneur_EnregistrerParRequete(String strSql,String valeur);
     
     // Read
     public List<Donneur> MdlDonneur_GetAll();

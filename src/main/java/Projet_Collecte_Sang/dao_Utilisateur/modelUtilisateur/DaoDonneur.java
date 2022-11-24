@@ -1,4 +1,4 @@
-package Projet_Collecte_Sang.dao_Donnneur.modelDonneur;
+package Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -74,7 +74,7 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public String MdlDonneur_Enregistrer(Donneur donneur) {
+    public String MdlDonneur_Enregistrer(utilisateur donneur) {
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(ENREGISTRER, Statement.RETURN_GENERATED_KEYS);
@@ -104,16 +104,16 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public List<Donneur> MdlDonneur_GetAll() {
+    public List<utilisateur> MdlDonneur_GetAll() {
             PreparedStatement stmt = null;
-            List<Donneur> listeDonneurs = new ArrayList<Donneur>();
+            List<utilisateur> listeDonneurs = new ArrayList<utilisateur>();
     
             try {
                 stmt = conn.prepareStatement(GET_ALL);
                 ResultSet rs = stmt.executeQuery();
     
                 while (rs.next()) {
-                    Donneur donneur = new Donneur();
+                    utilisateur donneur = new utilisateur();
                     donneur.setId(rs.getInt(1));
                     donneur.setNom(rs.getString(2));
                     donneur.setPrenom(rs.getString(3));
@@ -139,7 +139,7 @@ public class DaoDonneur implements IDonneur {
     
 
     @Override
-    public Donneur MdlDonneur_GetByID(int id) {
+    public utilisateur MdlDonneur_GetByID(int id) {
         PreparedStatement stmt = null;
 
         try {
@@ -150,7 +150,7 @@ public class DaoDonneur implements IDonneur {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Donneur donneur = new Donneur();
+                utilisateur donneur = new utilisateur();
                 donneur.setId(rs.getInt(1));
                 donneur.setNom(rs.getString(2));
                 donneur.setPrenom(rs.getString(3));
@@ -176,9 +176,9 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public List<Donneur> MdlDonneur_GetByChamps(String champs, String valeur) {
+    public List<utilisateur> MdlDonneur_GetByChamps(String champs, String valeur) {
         PreparedStatement stmt = null;
-        List<Donneur> listeDonneurs = new ArrayList<Donneur>();
+        List<utilisateur> listeDonneurs = new ArrayList<utilisateur>();
 
         try {
             stmt = conn.prepareStatement(GET_BY_CHAMPS + champs + "=?");
@@ -187,7 +187,7 @@ public class DaoDonneur implements IDonneur {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Donneur donneur = new Donneur();
+                utilisateur donneur = new utilisateur();
                 donneur.setId(rs.getInt(1));
                 donneur.setNom(rs.getString(2));
                 donneur.setPrenom(rs.getString(3));
@@ -212,7 +212,7 @@ public class DaoDonneur implements IDonneur {
 }
 
     @Override
-    public int MdlDonneur_Modifier(Donneur donneur) {
+    public int MdlDonneur_Modifier(utilisateur donneur) {
         PreparedStatement stmt = null;
        
         try {
