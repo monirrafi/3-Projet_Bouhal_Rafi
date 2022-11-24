@@ -1,112 +1,108 @@
 package Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur;
-public class utilisateur {
+public class Utilisateur {
     private int id;
     private String  nom ="";
     private String  prenom ="";
-    private String  dateNaissance ="";
     private String  telphone ="";
     private String  email ="";
-    private String  addresse ="";
-    private double  poids =0.0;
-    private String  groupage ="";
-    private String  sexe ="";
+    private String userName;
+    private String motPasse;
     
     
-    public utilisateur() {
+    public Utilisateur() {
     }
 
     
-    public utilisateur(int id, String nom, String prenom, String dateNaissance, String telphone, String email,
-            String addresse, double poids, String groupage, String sexe) {
+    public Utilisateur(int id, String nom, String prenom, String telphone, String email, String userName,
+            String motPasse) {
                 this.setId(id);
                 this.setNom(nom);
                 this.setPrenom(prenom);
-                this.setDateNaissance(dateNaissance);
                 this.setTelphone(telphone);
                 this.setEmail(email);
-                this.setAddresse(addresse);
-                this.setPoids(poids);
-                this.setGroupage(groupage);
-                this.setSexe(sexe);
-            }
+                this.setUserName(userName);
+                this.setMotPasse(motPasse);
+    }
 
-            public utilisateur(String nom, String prenom, String dateNaissance, String telphone, String email,
-            String addresse, double poids, String groupage, String sexe) {
+    public Utilisateur(String nom, String prenom, String telphone, String email, String userName,
+            String motPasse) {
                 this.setNom(nom);
                 this.setPrenom(prenom);
-                this.setDateNaissance(dateNaissance);
                 this.setTelphone(telphone);
                 this.setEmail(email);
-                this.setAddresse(addresse);
-                this.setPoids(poids);
-                this.setGroupage(groupage);
-                this.setSexe(sexe);
+                this.setUserName(userName);
+                this.setMotPasse(motPasse);
+    }
+
+            public int getId() {
+                return id;
             }
 
 
-    public String getNom() {
-        return nom;
-    }
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-    public String getPrenom() {
-        return prenom;
-    }
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-    public String getDateNaissance() {
-        return dateNaissance;
-    }
-    public void setDateNaissance(String dateNaissance) {
-        this.dateNaissance = dateNaissance;
-    }
-    public String getTelphone() {
-        return telphone;
-    }
-    public void setTelphone(String telphone) {
-        this.telphone = telphone;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public double getPoids() {
-        return poids;
-    }
-    public void setPoids(double poids) {
-        this.poids = poids;
-    }
-    public String getGroupage() {
-        return groupage;
-    }
-    public void setGroupage(String groupage) {
-        this.groupage = groupage;
-    }
-    public String getSexe() {
-        return sexe;
-    }
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
-    }
-    public String getAddresse() {
-        return addresse;
-    }
-    public void setAddresse(String addresse) {
-        this.addresse = addresse;
-    }
+            public void setId(int id) {
+                this.id = id;
+            }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+            public String getNom() {
+                return nom;
+            }
 
-    
+
+            public void setNom(String nom) {
+                this.nom = nom;
+            }
+
+
+            public String getPrenom() {
+                return prenom;
+            }
+
+
+            public void setPrenom(String prenom) {
+                this.prenom = prenom;
+            }
+
+
+            public String getTelphone() {
+                return telphone;
+            }
+
+
+            public void setTelphone(String telphone) {
+                this.telphone = telphone;
+            }
+
+
+            public String getEmail() {
+                return email;
+            }
+
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+
+            public String getUserName() {
+                return userName;
+            }
+
+
+            public void setUserName(String userName) {
+                this.userName = userName;
+            }
+
+
+            public String getMotPasse() {
+                return motPasse;
+            }
+
+
+            public void setMotPasse(String motPasse) {
+                this.motPasse = motPasse;
+            }
+
+
     
 }

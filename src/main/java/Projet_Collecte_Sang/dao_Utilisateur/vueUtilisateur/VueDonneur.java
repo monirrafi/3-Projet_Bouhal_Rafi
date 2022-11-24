@@ -1,4 +1,4 @@
-package Projet_Collecte_Sang.dao_Donnneur.vueDonneur;
+package Projet_Collecte_Sang.dao_Utilisateur.vueUtilisateur;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -60,6 +60,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 
 		table.setModel(imageTable());
 		scroll = new JScrollPane(table);
+		
 		JLabel lblId = new JLabel("Donneur ");
 		lblId.setFont(new Font("Serif", Font.BOLD, 20));
 		lblId.setForeground(Color.blue);

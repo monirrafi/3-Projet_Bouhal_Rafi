@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DaoDonneur implements IDonneur {
+public class DaoUtilisateur implements IUtilisateur {
     private static Connection conn = null;
-    private static DaoDonneur instanceDao = null;
+    private static DaoUtilisateur instanceDao = null;
 
     // MySQL
     //private static final String PILOTE = "com.mysql.jdbc.Driver";
@@ -20,24 +20,24 @@ public class DaoDonneur implements IDonneur {
     private static final String USAGER = "root";
     private static final String PASS = "";
 
-    private static final String SUPPRIMER = "DELETE FROM donneur WHERE ID_DONNEUR=?";
-    private static final String GET_ALL = "SELECT * FROM donneur ORDER BY ID_DONNEUR";
-    private static final String GET_BY_ID = "SELECT * FROM donneur WHERE ID_DONNEUR=?";
-    private static final String GET_BY_CHAMPS = "SELECT * FROM donneur WHERE ";
-    private static final String ENREGISTRER = "INSERT INTO donneur VALUES(0,?,?,?, ?,?,?, ?,?,?)";
-    private static final String MODIFIER = "UPDATE donneur SET NOM=?,PRENOM=?,DATE_NAISSANCE=?,TEL=?,EMAIL=?,ADRESSE=?,POIDS=?,GROUPAGE=?,SEXE=? WHERE ID_DONNEUR=?";
+    private static final String SUPPRIMER = "DELETE FROM Utilisateur WHERE ID_Utilisateur=?";
+    private static final String GET_ALL = "SELECT * FROM Utilisateur ORDER BY ID_Utilisateur";
+    private static final String GET_BY_ID = "SELECT * FROM Utilisateur WHERE ID_Utilisateur=?";
+    private static final String GET_BY_CHAMPS = "SELECT * FROM Utilisateur WHERE ";
+    private static final String ENREGISTRER = "INSERT INTO Utilisateur VALUES(0,?,?,?, ?,?,?, ?,?,?)";
+    private static final String MODIFIER = "UPDATE Utilisateur SET NOM=?,PRENOM=?,TEL=?,EMAIL=?,USERNAME=?,MOTDEPASSE=? WHERE ID_Utilisateur=?";
 
     // Singleton de connexion à la BD
     // getConnexion() est devenu une zonne critique. 
     // Pour ne pas avoir deux processus légers (threads) qui
     // appellent au même temps getConnexion
 
-    private DaoDonneur(){};
+    private DaoUtilisateur(){};
 
-    public static synchronized DaoDonneur getLivreDao () {
+    public static synchronized DaoUtilisateur getLivreDao () {
         try {
                 if (instanceDao == null) {
-                    instanceDao = new DaoDonneur();
+                    instanceDao = new DaoUtilisateur();
                     conn = DriverManager.getConnection(URL_BD, USAGER, PASS);
                 }
                 return instanceDao;
@@ -74,27 +74,24 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public String MdlDonneur_Enregistrer(utilisateur donneur) {
+    public String MdlUtilisateur_Enregistrer(Utilisateur Utilisateur) {
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(ENREGISTRER, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, donneur.getNom());
-            stmt.setString(2, donneur.getPrenom());
-            stmt.setString(3, donneur.getDateNaissance());
-            stmt.setString(4, donneur.getTelphone());
-            stmt.setString(5, donneur.getEmail());
-            stmt.setString(6, donneur.getAddresse());
-            stmt.setDouble(7, donneur.getPoids());
-            stmt.setString(8, donneur.getGroupage());
-            stmt.setString(9, donneur.getSexe());
+            stmt.setString(1, Utilisateur.getNom());
+            stmt.setString(2, Utilisateur.getPrenom());
+            stmt.setString(3, Utilisateur.getTelphone());
+            stmt.setString(4, Utilisateur.getEmail());
+            stmt.setString(5, Utilisateur.getUserName());
+            stmt.setString(6, Utilisateur.getMotPasse());
            
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
-                donneur.setId(rs.getInt(1));
+                Utilisateur.setId(rs.getInt(1));
             }
-            return "donneur est bien enregistré ";
+            return "Utilisateur est bien enregistré ";
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -104,42 +101,39 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public List<utilisateur> MdlDonneur_GetAll() {
+    public List<Utilisateur> MdlUtilisateur_GetAll() {
             PreparedStatement stmt = null;
-            List<utilisateur> listeDonneurs = new ArrayList<utilisateur>();
+            List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
     
             try {
                 stmt = conn.prepareStatement(GET_ALL);
                 ResultSet rs = stmt.executeQuery();
     
                 while (rs.next()) {
-                    utilisateur donneur = new utilisateur();
-                    donneur.setId(rs.getInt(1));
-                    donneur.setNom(rs.getString(2));
-                    donneur.setPrenom(rs.getString(3));
-                    donneur.setDateNaissance(rs.getString(4));
-                    donneur.setTelphone(rs.getString(5));
-                    donneur.setEmail(rs.getString(6));
-                    donneur.setAddresse(rs.getString(7));
-                    donneur.setPoids(rs.getDouble(8));
-                    donneur.setGroupage(rs.getString(9));
-                    donneur.setSexe(rs.getString(10));
-                    listeDonneurs.add(donneur);
+                    Utilisateur Utilisateur = new Utilisateur();
+                    Utilisateur.setId(rs.getInt(1));
+                    Utilisateur.setNom(rs.getString(2));
+                    Utilisateur.setPrenom(rs.getString(3));
+                    Utilisateur.setTelphone(rs.getString(4));
+                    Utilisateur.setEmail(rs.getString(5));
+                    Utilisateur.setUserName(rs.getString(6));
+                    Utilisateur.setMotPasse(rs.getString(7));
+                    listeUtilisateurs.add(Utilisateur);
                 }
             } catch (SQLException e) {
                 // e.printStackTrace();
                 throw new RuntimeException(e);
             } finally {
                 Mdl_Fermer(stmt);
-               // Mdldonneur_Fermer(conn);
+               // MdlUtilisateur_Fermer(conn);
             }
     
-            return listeDonneurs;
+            return listeUtilisateurs;
         }
     
 
     @Override
-    public utilisateur MdlDonneur_GetByID(int id) {
+    public Utilisateur MdlUtilisateur_GetByID(int id) {
         PreparedStatement stmt = null;
 
         try {
@@ -150,19 +144,16 @@ public class DaoDonneur implements IDonneur {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                utilisateur donneur = new utilisateur();
-                donneur.setId(rs.getInt(1));
-                donneur.setNom(rs.getString(2));
-                donneur.setPrenom(rs.getString(3));
-                donneur.setDateNaissance(rs.getString(4));
-                donneur.setTelphone(rs.getString(5));
-                donneur.setEmail(rs.getString(6));
-                donneur.setAddresse(rs.getString(7));
-                donneur.setPoids(rs.getDouble(8));
-                donneur.setGroupage(rs.getString(9));
-                donneur.setSexe(rs.getString(10));
+                Utilisateur Utilisateur = new Utilisateur();
+                Utilisateur.setId(rs.getInt(1));
+                Utilisateur.setNom(rs.getString(2));
+                Utilisateur.setPrenom(rs.getString(3));
+                Utilisateur.setTelphone(rs.getString(4));
+                Utilisateur.setEmail(rs.getString(5));
+                Utilisateur.setUserName(rs.getString(6));
+                Utilisateur.setMotPasse(rs.getString(7));
 
-                return donneur;
+                return Utilisateur;
             } else {
                 return null;
             }
@@ -176,9 +167,9 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public List<utilisateur> MdlDonneur_GetByChamps(String champs, String valeur) {
+    public List<Utilisateur> MdlUtilisateur_GetByChamps(String champs, String valeur) {
         PreparedStatement stmt = null;
-        List<utilisateur> listeDonneurs = new ArrayList<utilisateur>();
+        List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
 
         try {
             stmt = conn.prepareStatement(GET_BY_CHAMPS + champs + "=?");
@@ -187,46 +178,40 @@ public class DaoDonneur implements IDonneur {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                utilisateur donneur = new utilisateur();
-                donneur.setId(rs.getInt(1));
-                donneur.setNom(rs.getString(2));
-                donneur.setPrenom(rs.getString(3));
-                donneur.setDateNaissance(rs.getString(4));
-                donneur.setTelphone(rs.getString(5));
-                donneur.setEmail(rs.getString(6));
-                donneur.setAddresse(rs.getString(7));
-                donneur.setPoids(rs.getDouble(8));
-                donneur.setGroupage(rs.getString(9));
-                donneur.setSexe(rs.getString(10));
-                listeDonneurs.add(donneur);
+                Utilisateur Utilisateur = new Utilisateur();
+                Utilisateur.setId(rs.getInt(1));
+                Utilisateur.setNom(rs.getString(2));
+                Utilisateur.setPrenom(rs.getString(3));
+                Utilisateur.setTelphone(rs.getString(4));
+                Utilisateur.setEmail(rs.getString(5));
+                Utilisateur.setUserName(rs.getString(6));
+                Utilisateur.setMotPasse(rs.getString(7));
+            listeUtilisateurs.add(Utilisateur);
             }
         } catch (SQLException e) {
             // e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             Mdl_Fermer(stmt);
-           // Mdldonneur_Fermer(conn);
+           // MdlUtilisateur_Fermer(conn);
         }
 
-        return listeDonneurs;
+        return listeUtilisateurs;
 }
 
     @Override
-    public int MdlDonneur_Modifier(utilisateur donneur) {
+    public int MdlUtilisateur_Modifier(Utilisateur Utilisateur) {
         PreparedStatement stmt = null;
        
         try {
             stmt = conn.prepareStatement(MODIFIER);
-            stmt.setString(1, donneur.getNom());
-            stmt.setString(2, donneur.getPrenom());
-            stmt.setString(3, donneur.getDateNaissance());
-            stmt.setString(4, donneur.getTelphone());
-            stmt.setString(5, donneur.getEmail());
-            stmt.setString(6, donneur.getAddresse());
-            stmt.setDouble(7, donneur.getPoids());
-            stmt.setString(8, donneur.getGroupage());
-            stmt.setString(9, donneur.getSexe());
-            stmt.setInt(10, donneur.getId());
+            stmt.setString(1, Utilisateur.getNom());
+            stmt.setString(2, Utilisateur.getPrenom());
+            stmt.setString(3, Utilisateur.getTelphone());
+            stmt.setString(4, Utilisateur.getEmail());
+            stmt.setString(5, Utilisateur.getUserName());
+            stmt.setString(6, Utilisateur.getMotPasse());
+            stmt.setInt(7, Utilisateur.getId());
             return stmt.executeUpdate();
         } catch (SQLException e) {
             // e.printStackTrace();
@@ -238,7 +223,7 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public int MdlDonneur_Supprimer(int id) {
+    public int MdlUtilisateur_Supprimer(int id) {
         PreparedStatement stmt = null;
 
         try {
@@ -256,7 +241,7 @@ public class DaoDonneur implements IDonneur {
     }
 
     @Override
-    public int MdlDonneur_EnregistrerParRequete(String strSql,String valeur) {
+    public int MdlUtilisateur_EnregistrerParRequete(String strSql,String valeur) {
         PreparedStatement stmt = null;
         int cle=0;
         try {

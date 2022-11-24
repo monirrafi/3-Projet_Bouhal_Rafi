@@ -121,7 +121,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 			
 
 		}else if(ev.getSource()== btnModifierChamps){
-			String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur a ajouter");
+			String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur à modifier");
 
 			modifierDonneur(strCle);
 			
@@ -130,7 +130,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 			Suprimer();
 
 		}else if(ev.getSource()== btnAjouter){
-			String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur a ajouter");
+			String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur à ajouter");
 			ajouter(strCle);
 
 		}else if(ev.getSource()== btnQuitter){
@@ -164,7 +164,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 /*										S-A-R     															    */
 /*=============================================================================================================*/
 public void Suprimer() {
-	String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur a ajouter");
+	String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur à suprimer");
 	if(ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).size() == 0){
 			JOptionPane.showMessageDialog(null, "le donneur "+ strCle +" n' existe pas!!");
 			
@@ -190,8 +190,11 @@ public void ajouter(String strCle) {
 			int rep = JOptionPane.showConfirmDialog(null, "le livre du numéro "+ strCle +"  existe déjà!!\n Voulez-vous le modifier?","AJOUT", JOptionPane.YES_NO_OPTION);
 			if(rep==0){
 				modifierDonneur(strCle);
-			}			
-	}else{
+			}else{	
+				DefaultTableModel modelTable = remplirTable("","");
+				table.setModel(modelTable);
+			   }
+		}else{
 		int cle= ctrDonneur.CtrDonneur_EnregistrerParRequete("INSERT INTO donneur(ID_DONNEUR,NOM) VALUES(0,?)",strCle);
 		//Donneur donneur = ctrDonneur.CtrDonneur_GetById(cle);
 
@@ -229,8 +232,11 @@ public void modifierDonneur(String strCle) {
 		   int rep = JOptionPane.showConfirmDialog(null, "le donneur "+ strCle +" n' existe pas!!\n Voulez-vous l'ajouter ?","MODIFIER", JOptionPane.YES_NO_OPTION);
 		   if(rep==0){
 			   ajouter(strCle);
-		   }			
-		   
+		   }else{	
+			DefaultTableModel modelTable = remplirTable("","");
+			table.setModel(modelTable);
+		   }
+			  
 	}else{
 		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0);
 		ArrayList<String> data = new ArrayList<String>(){{
