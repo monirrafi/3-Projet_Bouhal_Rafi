@@ -26,7 +26,7 @@ public class DaoDonneur implements IDonneur {
     private static final String GET_BY_ID = "SELECT * FROM donneur WHERE ID_DONNEUR=?";
     private static final String GET_BY_CHAMPS = "SELECT * FROM donneur WHERE ";
     private static final String ENREGISTRER = "INSERT INTO donneur VALUES(0,?,?,?, ?,?,?, ?,?,?)";
-    private static final String MODIFIER = "UPDATE donneur SET ID_DONNEUR=?,NOM=?,PRENOM=?,DATE_NAISSANCE=?,TEL=?,EMAIL=?,POIDS=?,GROUPAGE=?,SEXE,ADRESSE=? WHERE ID_DONNEUR=?";
+    private static final String MODIFIER = "UPDATE donneur SET NOM=?,PRENOM=?,DATE_NAISSANCE=?,TEL=?,EMAIL=?,ADRESSE=?,POIDS=?,GROUPAGE=?,SEXE=? WHERE ID_DONNEUR=?";
 
     // Singleton de connexion à la BD
     // getConnexion() est devenu une zonne critique. 

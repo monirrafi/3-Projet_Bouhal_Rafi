@@ -6,28 +6,43 @@ public class Donneur {
     private String  dateNaissance ="";
     private String  telphone ="";
     private String  email ="";
+    private String  addresse ="";
     private double  poids =0.0;
     private String  groupage ="";
     private String  sexe ="";
-    private String  addresse ="";
-
+    
     
     public Donneur() {
     }
 
-    public Donneur(int id,String nom, String prenom, String dateNaissance, String telphone, String email, double poids,
-            String groupage, String sexe, String addresse) {
-        this.setId(id);
-        this.setNom(prenom);
-        this.setPrenom(prenom);
-        this.setDateNaissance(dateNaissance);
-        this.setTelphone(telphone);
-        this.setEmail(email);
-        this.setPoids(poids);
-        this.setGroupage(groupage);
-        this.setSexe(sexe);
-        this.setAddresse(addresse);
-    }
+    
+    public Donneur(int id, String nom, String prenom, String dateNaissance, String telphone, String email,
+            String addresse, double poids, String groupage, String sexe) {
+                this.setId(id);
+                this.setNom(nom);
+                this.setPrenom(prenom);
+                this.setDateNaissance(dateNaissance);
+                this.setTelphone(telphone);
+                this.setEmail(email);
+                this.setAddresse(addresse);
+                this.setPoids(poids);
+                this.setGroupage(groupage);
+                this.setSexe(sexe);
+            }
+
+            public Donneur(String nom, String prenom, String dateNaissance, String telphone, String email,
+            String addresse, double poids, String groupage, String sexe) {
+                this.setNom(nom);
+                this.setPrenom(prenom);
+                this.setDateNaissance(dateNaissance);
+                this.setTelphone(telphone);
+                this.setEmail(email);
+                this.setAddresse(addresse);
+                this.setPoids(poids);
+                this.setGroupage(groupage);
+                this.setSexe(sexe);
+            }
+
 
     public String getNom() {
         return nom;

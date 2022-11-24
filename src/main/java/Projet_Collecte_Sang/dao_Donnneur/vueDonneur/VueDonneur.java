@@ -61,7 +61,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 
 		table.setModel(imageTable());
 		scroll = new JScrollPane(table);
-		cmbId =new JComboBox<>(getListeCBox("Id"));
+		cmbId =new JComboBox<>(getListeCBox("id"));
 	
 	
 		btnStyle(btnLister);
@@ -179,13 +179,14 @@ public void Suprimer() {
 	
 }
 public void ajouter() {
-	String strCle = JOptionPane.showInputDialog(null, "Entrez le numéro du livre a ajouter");
+/* 	String strCle = JOptionPane.showInputDialog(null, "Entrez le numéro du livre a ajouter");
 	int cle= Integer.parseInt(strCle);
 	if(ctrDonneur.CtrDonneur_GetById(cle) != null){
 			JOptionPane.showMessageDialog(null, "le livre du numéro "+ cle +"  existe déjà!!");
 			
-	}else{
-		ArrayList<String> data = new ArrayList<String>(){{add(strCle);add(null);add(null);add(null);add(null);add(null);}};
+	}else{*/
+		ArrayList<String> data = new ArrayList<String>(){{add(null);add(null);add(null);
+			add(null);add(null);add(null);add(null);add(null);add(null);}};
 		String[] retour = paneString(data,new ArrayList<String>(){{add("Nom");
 		add("Prenom");
 		add("Date Naissance");
@@ -196,31 +197,33 @@ public void ajouter() {
 		add("Groupe sangaine");
 		add("Sexe");}},"                         Entrez les informations du votre nouveau donneur");
 		if (retour != null){
-			Donneur donneur = new Donneur();
+			Donneur donneur = new Donneur(retour[0],retour[1],retour[2],retour[3],retour[4],retour[5],Double.parseDouble(retour[6]),retour[7],retour[8]);
+
 			ctrDonneur.CtrDonneur_Enregistrer(donneur);
 
 			DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
 			cmbId.removeAll();
 			cmbId.setModel(modelNum);
 
-			DefaultTableModel modelTable = remplirTable("ID_DONNEUR",String.valueOf(cle));
+//			DefaultTableModel modelTable = remplirTable("ID_DONNEUR",String.valueOf(cle));
+			DefaultTableModel modelTable = remplirTable("","");
 			table.setModel(modelTable);
 		}	
 	}
 //	sauvgarder();
 
-}
+//}
 public void modifierLivre() {
 	//ArrayList<Livre> listeLivres = remplirArrayliste();
-	String strCle = JOptionPane.showInputDialog(null, "Entrez le numéro du livre a modifier");
+	String strCle = JOptionPane.showInputDialog(null, "Entrez le numéro du donneur a modifier");
 	int cle= Integer.parseInt(strCle);
 	Donneur donneur = ctrDonneur.CtrDonneur_GetById(cle);
 	if(donneur == null){
-			JOptionPane.showMessageDialog(null, "le livre du numéro "+ cle +" n' existe pas!!");
+			JOptionPane.showMessageDialog(null, "le donneur du numéro "+ cle +" n' existe pas!!");
 			
 	}else{
 		
-		ArrayList<String> data = new ArrayList<String>(){{add(strCle);
+		ArrayList<String> data = new ArrayList<String>(){{
 			add(donneur.getNom());
 			add(donneur.getPrenom());
 			add(donneur.getDateNaissance());
@@ -241,8 +244,8 @@ public void modifierLivre() {
 		add("Groupe sangaine");
 		add("Sexe");}},"                         Modifiez les informations du votre donneur");
 		if (retour != null){
-			Donneur livreModifier = new Donneur();
-			ctrDonneur.CtrDonneur_Modifier(livreModifier);
+			Donneur donneurModifier = new Donneur(donneur.getId(),retour[0],retour[1],retour[2],retour[3],retour[4],retour[5],Double.parseDouble(retour[6]),retour[7],retour[8]);
+			ctrDonneur.CtrDonneur_Modifier(donneurModifier);
 		}
 		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
 		cmbId.removeAll();
@@ -255,7 +258,7 @@ public void modifierLivre() {
 
 }
 public String[] paneString(ArrayList<String> data,ArrayList<String> listeChamps,String titre) {
-	String[] retour = new String[6];
+	String[] retour = new String[data.size()];
 			Dimension d =new Dimension(350,20);
 			Color cl = new Color(102,178,255);
 			ArrayList<JTextField> listeJtxt = new ArrayList<>();
@@ -341,7 +344,7 @@ public  String[] getListeCBox(String choix){
 		}
 		retour = new String[listeTmp.size()];
 		for(int i=0;i<listeTmp.size();i++){
-			retour[i+1]=listeTmp.get(i);
+			retour[i]=listeTmp.get(i);
 		}
 		
 		return retour;
