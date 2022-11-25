@@ -20,7 +20,7 @@ public class ConnexionForm extends JFrame {
         public ConnexionForm() {
             setBackground(new Color(0, 128, 0));
             //setIconImage(Toolkit.getDefaultToolkit().getImage(ConnexionForm.class.getResource("src/main/java/Projet_Collecte_Sang/Acceuil/logo1.jpg")));
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setBounds(100, 100, 681, 426);
             contentPane = new JPanel();
             contentPane.setBackground(new Color(0, 128, 0));
@@ -69,7 +69,7 @@ public class ConnexionForm extends JFrame {
                     String pass = user.getMotPasse();
                     if(txtUser.getText().equals(userName)) {
                         if(passwordField.getText().equals(pass)){
-                            
+
                         }
                     }else{
                         JOptionPane.showMessageDialog(null, "Le user name est incorrect!\n Essayez une autre fois");

@@ -12,7 +12,7 @@ public class Acceuil extends JFrame {
 	private JPanel contentPane;
 
 	public Acceuil() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1299, 629);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
@@ -91,6 +91,15 @@ public class Acceuil extends JFrame {
 		btnDonneurs.setBackground(new Color(128, 0, 0));
 		btnDonneurs.setBounds(45, 123, 145, 32);
 		contentPane.add(btnDonneurs);
+
+        btnCollecte.setEnabled(false);
+        btnDon.setEnabled(false);
+        btnDonneurs.setEnabled(false);
+        btnUtilisateur.setEnabled(false);
+        btnLieu.setEnabled(false);
+        btnRDV.setEnabled(false);
+
+
 	}
 
 
