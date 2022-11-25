@@ -34,7 +34,7 @@ public class DaoUtilisateur implements IUtilisateur {
 
     private DaoUtilisateur(){};
 
-    public static synchronized DaoUtilisateur getLivreDao () {
+    public static synchronized DaoUtilisateur getUtilisateurDao () {
         try {
                 if (instanceDao == null) {
                     instanceDao = new DaoUtilisateur();

@@ -20,7 +20,7 @@ public class ControleurUtilisateur implements IActionsUtilisateur {
         try {
             if (CtrUtilisateur_Instance == null) {
                 CtrUtilisateur_Instance = new ControleurUtilisateur();
-                Dao_Instance = DaoUtilisateur.getLivreDao();
+                Dao_Instance = DaoUtilisateur.getUtilisateurDao();
             }
             return CtrUtilisateur_Instance;
         } catch (Exception e) {
