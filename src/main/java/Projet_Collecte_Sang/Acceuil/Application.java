@@ -8,8 +8,8 @@ public final class Application {
     }
 
     public static void main(String[] args) {
-/*       // Acceuil acceuil = new Acceuil();
-       // acceuil.setVisible(true);
+/*       Acceuil acceuil = new Acceuil();
+        acceuil.setVisible(true);
         VueDonneur donneur = new VueDonneur();
         donneur.setVisible(true);
 
@@ -18,7 +18,9 @@ public final class Application {
         user.setVisible(true);
         ConnexionForm   frm = new ConnexionForm();
         frm.setVisible(true);*/
-        VueDonneur donneur = new VueDonneur();
-        donneur.setVisible(true);    
-	}
+        FormulaireUser user = new FormulaireUser();
+        user.action();
+        user.setVisible(true);
+
+}
 }

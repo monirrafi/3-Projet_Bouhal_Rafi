@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 public class Acceuil extends JFrame {
 
 	private JPanel contentPane;
-
+	private ConnexionForm frmConnexion;
 	public Acceuil() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1299, 629);
@@ -72,8 +72,8 @@ public class Acceuil extends JFrame {
 		btnConnecte.setBounds(45, 503, 145, 32);
         btnConnecte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                ConnexionForm frm = new ConnexionForm();
-                frm.setVisible(true);
+                frmConnexion = new ConnexionForm();
+                frmConnexion.setVisible(true);
 			}
 		});
 		contentPane.add(btnConnecte);

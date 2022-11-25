@@ -23,8 +23,9 @@ public class FormulaireUser extends JFrame implements actionEvent{
 	private JTextField txtPrenom;
 	private JTextField txtTel;
 	private JTextField txtEmail;
-	private JTextField txtUserName;
+	private JTextField txtNiveau;
 	private JPasswordField passwordField;
+	private JTextField txtUserName;
 	private JTable table = new JTable();
 	private JButton btnAjouter = new JButton();
 	private JButton btnModifier = new JButton();
@@ -36,7 +37,7 @@ public class FormulaireUser extends JFrame implements actionEvent{
 	public FormulaireUser() {
 		action();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 396);
+		setBounds(100, 100, 950, 431);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -50,7 +51,7 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		
 		JPanel paneChamps = new JPanel();
 		paneChamps.setBorder(new LineBorder(new Color(0, 0, 0)));
-		paneChamps.setBounds(10, 70, 350, 207);
+		paneChamps.setBounds(10, 70, 350, 235);
 		contentPane.add(paneChamps);
 		paneChamps.setLayout(null);
 		
@@ -98,71 +99,82 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		txtEmail.setBounds(142, 97, 198, 19);
 		paneChamps.add(txtEmail);
 		
-		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblUserName.setBounds(20, 130, 117, 19);
-		paneChamps.add(lblUserName);
+		JLabel lblNiveau = new JLabel("Niveau");
+		lblNiveau.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblNiveau.setBounds(20, 130, 117, 19);
+		paneChamps.add(lblNiveau);
 		
-		txtUserName = new JTextField();
-		lblUserName.setLabelFor(txtUserName);
-		txtUserName.setColumns(10);
-		txtUserName.setBounds(142, 128, 198, 19);
-		paneChamps.add(txtUserName);
+		txtNiveau = new JTextField();
+		lblNiveau.setLabelFor(txtNiveau);
+		txtNiveau.setColumns(10);
+		txtNiveau.setBounds(142, 128, 198, 19);
+		paneChamps.add(txtNiveau);
 		
 		JLabel lblMotPasse = new JLabel("Mot de Passe");
 		lblMotPasse.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblMotPasse.setBounds(20, 161, 117, 19);
+		lblMotPasse.setBounds(20, 192, 117, 19);
 		paneChamps.add(lblMotPasse);
 		
 		passwordField = new JPasswordField();
 		lblMotPasse.setLabelFor(passwordField);
-		passwordField.setBounds(142, 157, 198, 19);
+		passwordField.setBounds(142, 188, 198, 19);
 		paneChamps.add(passwordField);
+		
+		txtUserName = new JTextField();
+		txtUserName.setColumns(10);
+		txtUserName.setBounds(142, 159, 198, 19);
+		paneChamps.add(txtUserName);
+		
+		JLabel lblUserName = new JLabel("User Name");
+		lblUserName.setLabelFor(txtUserName);
+		lblUserName.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblUserName.setBounds(20, 161, 117, 19);
+		paneChamps.add(lblUserName);
 		
 		JPanel paneTable = new JPanel();
 		paneTable.setBounds(370, 70, 545, 207);
 		contentPane.add(paneTable);
 		paneTable.setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 525, 187);
+		paneTable.add(scrollPane);
 		
-		scroll = new JScrollPane(table);
-		table.setBounds(10, 10, 525, 187);
-		table.setModel(remplirTable("", ""));
-		/*
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"User", "Mot de passe"
+				"Nom", "Prenom", "Telephone", "courriel", "Niveau", "User Name", "Mot de passe"
 			}
-		));*/
-		paneTable.add(table);
+		));
 		
 		JPanel panelBouton = new JPanel();
-		panelBouton.setBounds(10, 287, 350, 50);
+		panelBouton.setBounds(10, 334, 350, 50);
 		contentPane.add(panelBouton);
 		panelBouton.setLayout(null);
 		
-		btnAjouter = new JButton("Ajouter");
+		JButton btnAjouter = new JButton("Ajouter");
 		btnAjouter.setBackground(new Color(255, 128, 0));
 		btnAjouter.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnAjouter.setBounds(132, 5, 85, 35);
 		panelBouton.add(btnAjouter);
 		
-		btnModifier = new JButton("Modifier");
+		JButton btnModifier = new JButton("Modifier");
 		btnModifier.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnModifier.setBackground(new Color(255, 128, 0));
 		btnModifier.setBounds(238, 5, 102, 35);
 		panelBouton.add(btnModifier);
 		
-		btnSuprimer = new JButton("Suprimer");
+		JButton btnSuprimer = new JButton("Suprimer");
 		btnSuprimer.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnSuprimer.setBackground(new Color(255, 128, 0));
 		btnSuprimer.setBounds(10, 5, 95, 35);
 		panelBouton.add(btnSuprimer);
 		
-		btnLister = new JButton("Afficher tout");
+		JButton btnLister = new JButton("Afficher tout");
 		btnLister.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnLister.setBackground(new Color(0, 128, 255));
 		btnLister.setBounds(757, 25, 158, 35);
@@ -232,6 +244,7 @@ public void viderChamps() {
 	txtEmail.setText("");
 	txtUserName.setText("");
 	passwordField.setText("");
+	txtNiveau.setText("");
 	
 }
 public DefaultTableModel remplirTable(String champs,String valeur) {
@@ -249,7 +262,7 @@ public DefaultTableModel remplirTable(String champs,String valeur) {
 	
 	
 	for(Utilisateur Utilisateur:listeUtilisateurs){
-			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getUserName(),Utilisateur.getMotPasse()});				
+			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getUserName(),Utilisateur.getMotPasse(),Utilisateur.getNiveau()});				
 		}
 	return model;
 
@@ -307,7 +320,7 @@ public void ajouter() {
 				}			
 		}else{
 			int cle= ctrUtilisateur.CtrUtilisateur_EnregistrerParRequete("INSERT INTO Utilisateur(ID_Utilisateur,NOM) VALUES(0,?)",strCle);
-				Utilisateur Utilisateur = new Utilisateur(cle,txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText());
+				Utilisateur Utilisateur = new Utilisateur(cle,txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
 
 				ctrUtilisateur.CtrUtilisateur_Modifier(Utilisateur);
 
@@ -334,7 +347,7 @@ public void modifierUtilisateur() {
 
 		if(rep==JOptionPane.YES_OPTION){
 		
-			Utilisateur utilisateurNew = new Utilisateur(utilisateur.getId(),txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText());
+			Utilisateur utilisateurNew = new Utilisateur(utilisateur.getId(),txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
 	
 			ctrUtilisateur.CtrUtilisateur_Modifier(utilisateurNew);
 	
