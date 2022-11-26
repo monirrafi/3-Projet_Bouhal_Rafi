@@ -2,7 +2,7 @@ package Projet_Collecte_Sang.Acceuil;
 
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +11,7 @@ import Projet_Collecte_Sang.actionEvent;
 import Projet_Collecte_Sang.dao_Donnneur.vueDonneur.VueDonneur;
 import Projet_Collecte_Sang.dao_Utilisateur.controleurUtilisateur.ControleurUtilisateur;
 import Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur.Utilisateur;
+import Projet_Collecte_Sang.dao_Utilisateur.vueUtilisateur.FormulaireUser;
 
 
 public class Acceuil extends JFrame implements actionEvent{
@@ -27,6 +28,8 @@ public class Acceuil extends JFrame implements actionEvent{
 
 	private ControleurUtilisateur  ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
 	private VueDonneur vueDonneur;
+	private FormulaireUser vueUtilisateur;
+
 	public Acceuil() {
 		action();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,11 +40,6 @@ public class Acceuil extends JFrame implements actionEvent{
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		/*
-		JPanel panel = new JPanel();
-		panel.setBounds(215, 123, 1033, 355);
-		contentPane.add(panel);
-		panel.setLayout(null);*/
 		
 		JLabel lblNewLabel_1 = new JLabel();
 		lblNewLabel_1.setIcon(new ImageIcon("src\\main\\java\\Projet_Collecte_Sang\\Acceuil\\logo1.jpg"));
@@ -103,11 +101,6 @@ public class Acceuil extends JFrame implements actionEvent{
 		btnConnecte.setForeground(Color.WHITE);
 		btnConnecte.setBackground(new Color(128, 0, 0));
 		btnConnecte.setBounds(45, 503, 145, 32);
-/*        btnConnecte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				libirerBoutton(connexionForm());
-			}
-		});*/
 		contentPane.add(btnConnecte);
 
 		btnCollecte.setEnabled(false);
@@ -142,9 +135,7 @@ public class Acceuil extends JFrame implements actionEvent{
 		userPane.add(lblUser);
 		JTextField txtUser = new JTextField();
 		txtUser.setPreferredSize(new Dimension(300,30));
-		//txtUser.setBounds(256, 113, 300, 30);
 		userPane.add(txtUser);
-		//txtUser.setColumns(10);
 		
 		JPanel passPane = new JPanel();
 		passPane.setBackground(new Color(0, 128, 0));
@@ -164,19 +155,27 @@ public class Acceuil extends JFrame implements actionEvent{
 		contentPane.add(userPane);
 		contentPane.add(passPane);
 
-		int res = JOptionPane.showConfirmDialog(null,contentPane,"CONNEXION",JOptionPane.YES_NO_OPTION);
+		int res = JOptionPane.showConfirmDialog(null,contentPane,"CONNEXION",JOptionPane.YES_NO_CANCEL_OPTION);
 		if(res == JOptionPane.YES_OPTION){
-			Utilisateur user = ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText()).get(0);
-			String userName = user.getUserName();
-			String pass = user.getMotPasse();
-			if(txtUser.getText().equals(userName)) {
-				if(passwordField.getText().equals(pass)){
-				   Utilisateur utilisateur = ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText()).get(0);
-					//setNiveau(utilisateur.getNiveau());
-					niveau = utilisateur.getNiveau();
+			ArrayList<Utilisateur> liste = (ArrayList<Utilisateur>)ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText());
+			if(liste.size() != 0){
+				Utilisateur user = liste.get(0);
+				String userName = user.getUserName();
+				String pass = user.getMotPasse();
+				if(txtUser.getText().equals(userName)) {
+					if(passwordField.getText().equals(pass)){
+					Utilisateur utilisateur = ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText()).get(0);
+						niveau = utilisateur.getNiveau();
+					}else{
+						JOptionPane.showMessageDialog(null, "Le mot de passe de " + userName + " est incorrect ou vide!\n Essayez une autre fois");
+						
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Le user name est incorrect ou vide!\n Essayez une autre fois");
 				}
 			}else{
 				JOptionPane.showMessageDialog(null, "Le user name est incorrect!\n Essayez une autre fois");
+
 			}                  
 
 		}  
@@ -187,15 +186,21 @@ public class Acceuil extends JFrame implements actionEvent{
 		if(entree == 3){
 			btnDonneur.setEnabled(true);
 			btnRDV.setEnabled(true);
-	
-		}else {
+		}else if(entree==1){
 			btnCollecte.setEnabled(true);
 			btnDon.setEnabled(true);
 			btnDonneur.setEnabled(true);
 			btnLieu.setEnabled(true);
 			btnRDV.setEnabled(true);
 			btnUtilisateur.setEnabled(true);
-	
+			
+		}else if(entree==2){
+			btnCollecte.setEnabled(true);
+			btnDon.setEnabled(true);
+			btnDonneur.setEnabled(true);
+			btnLieu.setEnabled(true);
+			btnRDV.setEnabled(true);
+			
 		}
 		
 	}
@@ -210,11 +215,15 @@ public void actionBtn(ActionEvent ev){
 
 	}else if(ev.getSource()== btnDonneur){
 		vueDonneur = new VueDonneur();
+		vueDonneur.action();
 		vueDonneur.setVisible(true);
 
 	}else if(ev.getSource()== btnLieu){
 
 	}else if(ev.getSource()== btnUtilisateur){
+		vueUtilisateur = new FormulaireUser();
+		vueUtilisateur.action();
+		vueUtilisateur.setVisible(true);
 
 	}else if(ev.getSource()== btnRDV){
 

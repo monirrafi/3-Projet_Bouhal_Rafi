@@ -11,6 +11,7 @@ public final class Application {
 /*       Acceuil acceuil = new Acceuil();
         acceuil.setVisible(true);
         VueDonneur donneur = new VueDonneur();
+        donneur.action();
         donneur.setVisible(true);
 
        FormulaireUser user = new FormulaireUser();
@@ -18,9 +19,10 @@ public final class Application {
         user.setVisible(true);
         ConnexionForm   frm = new ConnexionForm();
         frm.setVisible(true);*/
-        VueDonneur donneur = new VueDonneur();
-        donneur.action();
-        donneur.setVisible(true);
+        Acceuil acceuil = new Acceuil();
+        acceuil.action();
+        acceuil.setVisible(true);
+   
 
 }
 }
