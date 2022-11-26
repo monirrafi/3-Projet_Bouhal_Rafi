@@ -24,8 +24,8 @@ public class DaoUtilisateur implements IUtilisateur {
     private static final String GET_ALL = "SELECT * FROM Utilisateur ORDER BY ID_Utilisateur";
     private static final String GET_BY_ID = "SELECT * FROM Utilisateur WHERE ID_Utilisateur=?";
     private static final String GET_BY_CHAMPS = "SELECT * FROM Utilisateur WHERE ";
-    private static final String ENREGISTRER = "INSERT INTO Utilisateur VALUES(0,?,?,?, ?,?,?, ?,?,?)";
-    private static final String MODIFIER = "UPDATE Utilisateur SET NOM=?,PRENOM=?,TEL=?,EMAIL=?,USERNAME=?,MOTDEPASSE=? WHERE ID_Utilisateur=?";
+    private static final String ENREGISTRER = "INSERT INTO Utilisateur VALUES(0,?,?,?, ?,?,?, ?)";
+    private static final String MODIFIER = "UPDATE Utilisateur SET NOM=?,PRENOM=?,TEL=?,EMAIL=?,USERNAME=?,MOTDEPASSE=?,NIVEAU=? WHERE ID_Utilisateur=?";
 
     // Singleton de connexion à la BD
     // getConnexion() est devenu une zonne critique. 
@@ -84,6 +84,7 @@ public class DaoUtilisateur implements IUtilisateur {
             stmt.setString(4, Utilisateur.getEmail());
             stmt.setString(5, Utilisateur.getUserName());
             stmt.setString(6, Utilisateur.getMotPasse());
+            stmt.setInt(7, Utilisateur.getNiveau());
            
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
@@ -118,6 +119,7 @@ public class DaoUtilisateur implements IUtilisateur {
                     Utilisateur.setEmail(rs.getString(5));
                     Utilisateur.setUserName(rs.getString(6));
                     Utilisateur.setMotPasse(rs.getString(7));
+                    Utilisateur.setNiveau(rs.getInt(8));
                     listeUtilisateurs.add(Utilisateur);
                 }
             } catch (SQLException e) {
@@ -152,6 +154,7 @@ public class DaoUtilisateur implements IUtilisateur {
                 Utilisateur.setEmail(rs.getString(5));
                 Utilisateur.setUserName(rs.getString(6));
                 Utilisateur.setMotPasse(rs.getString(7));
+                Utilisateur.setNiveau(rs.getInt(8));
 
                 return Utilisateur;
             } else {
@@ -186,7 +189,8 @@ public class DaoUtilisateur implements IUtilisateur {
                 Utilisateur.setEmail(rs.getString(5));
                 Utilisateur.setUserName(rs.getString(6));
                 Utilisateur.setMotPasse(rs.getString(7));
-            listeUtilisateurs.add(Utilisateur);
+                Utilisateur.setNiveau(rs.getInt(8));
+                listeUtilisateurs.add(Utilisateur);
             }
         } catch (SQLException e) {
             // e.printStackTrace();
@@ -211,7 +215,8 @@ public class DaoUtilisateur implements IUtilisateur {
             stmt.setString(4, Utilisateur.getEmail());
             stmt.setString(5, Utilisateur.getUserName());
             stmt.setString(6, Utilisateur.getMotPasse());
-            stmt.setInt(7, Utilisateur.getId());
+            stmt.setInt(7, Utilisateur.getNiveau());
+            stmt.setInt(8, Utilisateur.getId());
             return stmt.executeUpdate();
         } catch (SQLException e) {
             // e.printStackTrace();

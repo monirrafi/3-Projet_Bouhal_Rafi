@@ -1,42 +1,50 @@
 package Projet_Collecte_Sang.dao_Utilisateur.vueUtilisateur;
-
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Projet_Collecte_Sang.actionEvent;
 import Projet_Collecte_Sang.dao_Utilisateur.controleurUtilisateur.ControleurUtilisateur;
 import Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur.Utilisateur;
 
-import java.util.*;
-import java.awt.event.*;
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
+import java.awt.Color;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 public class FormulaireUser extends JFrame implements actionEvent{
-
+	private ControleurUtilisateur ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
 	private JPanel contentPane;
-	static JScrollPane scroll =new JScrollPane();
-
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtTel;
 	private JTextField txtEmail;
-	private JTextField txtUserName;
+	private JTextField txtNiveau;
 	private JPasswordField passwordField;
-	private JTable table = new JTable();
-	private JButton btnAjouter = new JButton();
-	private JButton btnModifier = new JButton();
-	private JButton btnLister = new JButton();
-	private JButton btnSuprimer = new JButton();
-	private JComboBox<String> cmbNom = new JComboBox<>();
-	private ControleurUtilisateur ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
-
+	private JTable table;
+	private JTextField txtUserName;
+	JButton btnAjouter = new JButton();
+	JButton btnModifier = new JButton();
+	JButton btnSuprimer = new JButton();
+	JButton btnLister = new JButton();
+	JComboBox<String> cmbNom = new JComboBox<>();
+		
 	public FormulaireUser() {
-		action();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 396);
+		setBounds(100, 100, 950, 431);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -50,7 +58,7 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		
 		JPanel paneChamps = new JPanel();
 		paneChamps.setBorder(new LineBorder(new Color(0, 0, 0)));
-		paneChamps.setBounds(10, 70, 350, 207);
+		paneChamps.setBounds(10, 70, 350, 235);
 		contentPane.add(paneChamps);
 		paneChamps.setLayout(null);
 		
@@ -98,49 +106,60 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		txtEmail.setBounds(142, 97, 198, 19);
 		paneChamps.add(txtEmail);
 		
-		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblUserName.setBounds(20, 130, 117, 19);
-		paneChamps.add(lblUserName);
+		JLabel lblNiveau = new JLabel("Niveau");
+		lblNiveau.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblNiveau.setBounds(20, 130, 117, 19);
+		paneChamps.add(lblNiveau);
 		
-		txtUserName = new JTextField();
-		lblUserName.setLabelFor(txtUserName);
-		txtUserName.setColumns(10);
-		txtUserName.setBounds(142, 128, 198, 19);
-		paneChamps.add(txtUserName);
+		txtNiveau = new JTextField();
+		lblNiveau.setLabelFor(txtNiveau);
+		txtNiveau.setColumns(10);
+		txtNiveau.setBounds(142, 128, 198, 19);
+		paneChamps.add(txtNiveau);
 		
 		JLabel lblMotPasse = new JLabel("Mot de Passe");
 		lblMotPasse.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblMotPasse.setBounds(20, 161, 117, 19);
+		lblMotPasse.setBounds(20, 192, 117, 19);
 		paneChamps.add(lblMotPasse);
 		
 		passwordField = new JPasswordField();
 		lblMotPasse.setLabelFor(passwordField);
-		passwordField.setBounds(142, 157, 198, 19);
+		passwordField.setBounds(142, 188, 198, 19);
 		paneChamps.add(passwordField);
+		
+		txtUserName = new JTextField();
+		txtUserName.setColumns(10);
+		txtUserName.setBounds(142, 159, 198, 19);
+		paneChamps.add(txtUserName);
+		
+		JLabel lblUserName = new JLabel("User Name");
+		lblUserName.setLabelFor(txtUserName);
+		lblUserName.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblUserName.setBounds(20, 161, 117, 19);
+		paneChamps.add(lblUserName);
 		
 		JPanel paneTable = new JPanel();
 		paneTable.setBounds(370, 70, 545, 207);
 		contentPane.add(paneTable);
 		paneTable.setLayout(null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 525, 187);
+		paneTable.add(scrollPane);
 		
-		scroll = new JScrollPane(table);
-		table.setBounds(10, 10, 525, 187);
-		table.setModel(remplirTable("", ""));
-		/*
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"User", "Mot de passe"
+				"Nom", "Prenom", "Telephone", "courriel", "Niveau", "User Name", "Mot de passe"
 			}
-		));*/
-		paneTable.add(table);
+		));
 		
 		JPanel panelBouton = new JPanel();
-		panelBouton.setBounds(10, 287, 350, 50);
+		panelBouton.setBounds(10, 334, 350, 50);
 		contentPane.add(panelBouton);
 		panelBouton.setLayout(null);
 		
@@ -174,10 +193,11 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		lblUtilisateur.setBounds(475, 29, 196, 28);
 		contentPane.add(lblUtilisateur);
 		
-		cmbNom = new JComboBox<String>(getListeCBox("id"));
+		cmbNom = new JComboBox<>(getListeCBox("id"));
 		cmbNom.setBounds(681, 25, 66, 35);
 		contentPane.add(cmbNom);
 	}
+
 /*============================================================================================================= */
 /*										Ecouetuers																*/
 /*============================================================================================================= */
@@ -211,16 +231,6 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		}
 	}
 
-	@Override
-	public void action() {
-		cmbNom.addItemListener(this::itemStateChanged);
-		btnLister.addActionListener(this::actionBtn);
-		btnAjouter.addActionListener(this::actionBtn);
-		btnModifier.addActionListener(this::actionBtn);
-		btnSuprimer.addActionListener(this::actionBtn);
-		
-		
-	}
 	
 /*============================================================================================================= */
 /*										Fonctions																*/
@@ -232,10 +242,12 @@ public void viderChamps() {
 	txtEmail.setText("");
 	txtUserName.setText("");
 	passwordField.setText("");
+	txtNiveau.setText("");
 	
 }
 public DefaultTableModel remplirTable(String champs,String valeur) {
 	ArrayList<Utilisateur> listeUtilisateurs = new ArrayList<>();
+	
 	if(champs.equals("")){
 		listeUtilisateurs = (ArrayList<Utilisateur>) ctrUtilisateur.CtrUtilisateur_GetAll(); 	
 
@@ -249,7 +261,7 @@ public DefaultTableModel remplirTable(String champs,String valeur) {
 	
 	
 	for(Utilisateur Utilisateur:listeUtilisateurs){
-			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getUserName(),Utilisateur.getMotPasse()});				
+			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getUserName(),Utilisateur.getMotPasse(),Utilisateur.getNiveau()});				
 		}
 	return model;
 
@@ -306,10 +318,12 @@ public void ajouter() {
 					modifierUtilisateur();
 				}			
 		}else{
-			int cle= ctrUtilisateur.CtrUtilisateur_EnregistrerParRequete("INSERT INTO Utilisateur(ID_Utilisateur,NOM) VALUES(0,?)",strCle);
-				Utilisateur Utilisateur = new Utilisateur(cle,txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText());
+//			int cle= ctrUtilisateur.CtrUtilisateur_EnregistrerParRequete("INSERT INTO Utilisateur(ID_Utilisateur,NOM) VALUES(0,?)",strCle);
+//				Utilisateur Utilisateur = new Utilisateur(cle,txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
+//ctrUtilisateur.CtrUtilisateur_Modifier(Utilisateur);
 
-				ctrUtilisateur.CtrUtilisateur_Modifier(Utilisateur);
+		Utilisateur Utilisateur = new Utilisateur(txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
+		ctrUtilisateur.CtrUtilisateur_Enregistrer(Utilisateur);
 
 				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
 				cmbNom.removeAll();
@@ -334,7 +348,7 @@ public void modifierUtilisateur() {
 
 		if(rep==JOptionPane.YES_OPTION){
 		
-			Utilisateur utilisateurNew = new Utilisateur(utilisateur.getId(),txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText());
+			Utilisateur utilisateurNew = new Utilisateur(utilisateur.getId(),txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
 	
 			ctrUtilisateur.CtrUtilisateur_Modifier(utilisateurNew);
 	
@@ -389,10 +403,18 @@ public void modifierUtilisateur() {
 		txtPrenom.setText(utilisateur.getPrenom());
 		txtTel.setText(utilisateur.getTelphone());
 		txtEmail.setText(utilisateur.getEmail());
+		txtNiveau.setText(String.valueOf(utilisateur.getNiveau()));
 		txtUserName.setText(utilisateur.getUserName());
 		passwordField.setText(utilisateur.getMotPasse());
+	}
 
-	
+	@Override
+	public void action() {
+		cmbNom.addItemListener(this::itemStateChanged);
+		btnLister.addActionListener(this::actionBtn);
+		btnAjouter.addActionListener(this::actionBtn);
+		btnModifier.addActionListener(this::actionBtn);
+		btnSuprimer.addActionListener(this::actionBtn);
 		
 	}	
 }

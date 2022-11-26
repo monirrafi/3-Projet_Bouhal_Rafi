@@ -7,6 +7,7 @@ public class Utilisateur {
     private String  email ="";
     private String userName;
     private String motPasse;
+    private int niveau=0;
     
     
     public Utilisateur() {
@@ -14,7 +15,7 @@ public class Utilisateur {
 
     
     public Utilisateur(int id, String nom, String prenom, String telphone, String email, String userName,
-            String motPasse) {
+            String motPasse, int niveau) {
                 this.setId(id);
                 this.setNom(nom);
                 this.setPrenom(prenom);
@@ -22,16 +23,18 @@ public class Utilisateur {
                 this.setEmail(email);
                 this.setUserName(userName);
                 this.setMotPasse(motPasse);
+                this.setNiveau(niveau);
     }
 
     public Utilisateur(String nom, String prenom, String telphone, String email, String userName,
-            String motPasse) {
+            String motPasse, int niveau) {
                 this.setNom(nom);
                 this.setPrenom(prenom);
                 this.setTelphone(telphone);
                 this.setEmail(email);
                 this.setUserName(userName);
                 this.setMotPasse(motPasse);
+                this.setNiveau(niveau);
     }
 
             public int getId() {
@@ -101,6 +104,16 @@ public class Utilisateur {
 
             public void setMotPasse(String motPasse) {
                 this.motPasse = motPasse;
+            }
+
+
+            public int getNiveau() {
+                return niveau;
+            }
+
+
+            public void setNiveau(int niveau) {
+                this.niveau = niveau;
             }
 
 
