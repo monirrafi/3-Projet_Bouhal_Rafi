@@ -18,9 +18,9 @@ public final class Application {
         user.setVisible(true);
         ConnexionForm   frm = new ConnexionForm();
         frm.setVisible(true);*/
-        FormulaireUser user = new FormulaireUser();
-        user.action();
-        user.setVisible(true);
+        VueDonneur donneur = new VueDonneur();
+        donneur.action();
+        donneur.setVisible(true);
 
 }
 }

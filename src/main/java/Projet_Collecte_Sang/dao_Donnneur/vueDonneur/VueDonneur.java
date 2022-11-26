@@ -1,113 +1,235 @@
 package Projet_Collecte_Sang.dao_Donnneur.vueDonneur;
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
+import java.awt.Font;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import Projet_Collecte_Sang.actionEvent;
 import Projet_Collecte_Sang.dao_Donnneur.controleurDonneur.ControleurDonneur;
 import Projet_Collecte_Sang.dao_Donnneur.modelDonneur.Donneur;
 
-import java.awt.*;
-import java.util.*;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class VueDonneur extends JFrame implements actionEvent{
-
-/*============================================================================================================= */
-/*										Declaration															*/
-/*=============================================================================================================*/
-	static JPanel contentPane = new JPanel();
-	static JScrollPane scroll =new JScrollPane();
-	private JTable table = new JTable();
 	private ControleurDonneur ctrDonneur = ControleurDonneur.getControleurDonneur();
+	private JPanel contentPane;
+	private JTextField txtNom;
+	private JTextField txtPrenom;
+	private JTextField txtTel;
+	private JTextField txtEmail;
+	private JTextField txtAdresse;
+	private JTable table;
+	private JTextField txtPoids;
+	private JTextField txtGroupage;
+	private JTextField txtDateNaissance;
+	private JComboBox<String> cmbSexe = new JComboBox<>();
 
-
-	JComboBox<String> cmbId =new JComboBox<>();
-	static JButton btnLister = new JButton("Afficher les donneurs");
-	static JButton btnModifierChamps = new JButton("Modifier un champs");
-	static JButton btnSuprimer = new JButton("Suprimer un donneur");
-	static JButton btnAjouter = new JButton("Ajouter un donneur");
-	static JButton btnQuitter = new JButton("Quitter");
-	static GridBagConstraints gbc_tlBar;
-	static 	JTableHeader entete;
-
-/*============================================================================================================= */
-/*										Constructeurs															*/
-/*============================================================================================================= */
+	JButton btnAjouter = new JButton();
+	JButton btnModifier = new JButton();
+	JButton btnSuprimer = new JButton();
+	JButton btnLister = new JButton();
+	JComboBox<String> cmbNom = new JComboBox<>();
+		
 	public VueDonneur() {
-		affichage();
 		action();
-		
-	}
-	
-	public void affichage() {
-		//ImageIcon logo = new ImageIcon(getClass().getResource("src\\main\\java\\Projet_livre\\dao\\images\\biblio.png"));
-		//setIconImage(logo.getImage());
-		contentPane = new JPanel();
-		setTitle("Gestion de la bibliotheque");
+		setBackground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1550, 700);
-		contentPane.setBorder(new EmptyBorder(5, 5, 1, 0));
+		setBounds(100, 100, 935, 431);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
 		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{266, 62, 0};
-		gbl_contentPane.rowHeights = new int[]{21, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
-
-		table.setModel(imageTable());
-		scroll = new JScrollPane(table);
-		JLabel lblId = new JLabel("Donneur ");
-		lblId.setFont(new Font("Serif", Font.BOLD, 20));
-		lblId.setForeground(Color.blue);
-		lblId.setLabelFor(cmbId);
-
-		cmbId =new JComboBox<>(getListeCBox("id"));
-	
-	
-		btnStyle(btnLister);
-		btnStyle(btnAjouter);
-		btnStyle(btnSuprimer);
-		btnStyle(btnModifierChamps);
-		btnStyle(btnQuitter);
+		contentPane.setLayout(null);
 		
-		JToolBar tlBar = new JToolBar();
+		JLabel lblTitre = new JLabel("Mise à jour des donneurs");
+		lblTitre.setBackground(new Color(0, 128, 255));
+		lblTitre.setForeground(new Color(255, 255, 0));
+		lblTitre.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+		lblTitre.setBounds(10, 10, 350, 50);
+		contentPane.add(lblTitre);
 		
-		tlBar.setToolTipText("Liste des donneurs");
-		tlBar.setForeground(Color.BLACK);
-		tlBar.setFont(new Font("Serif", Font.PLAIN, 16));
-		tlBar.setBackground(Color.WHITE);
-		gbc_tlBar = new GridBagConstraints();
-		gbc_tlBar.insets = new Insets(0, 5, 10, 5);
-		gbc_tlBar.anchor = GridBagConstraints.NORTHWEST;
-		gbc_tlBar.gridx = 0;
-		gbc_tlBar.gridy = 0;
-		contentPane.add(tlBar, gbc_tlBar);
+		JPanel paneChamps = new JPanel();
+		paneChamps.setBackground(new Color(0, 128, 255));
+		paneChamps.setBorder(new LineBorder(new Color(0, 0, 0)));
+		paneChamps.setBounds(10, 70, 350, 295);
+		contentPane.add(paneChamps);
+		paneChamps.setLayout(null);
 		
-		cmbId.setBackground(new Color(123,104,238));
-		cmbId.setForeground(Color.yellow);
-		cmbId.setFont( new Font("Serif", Font.BOLD, 20));
-		cmbId.setOpaque(true);
-	
-
+		JLabel lblNom = new JLabel("Nom");
+		lblNom.setBounds(20, 7, 117, 19);
+		lblNom.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		paneChamps.add(lblNom);
 		
-		tlBar.add(btnLister);
-		tlBar.add(btnModifierChamps);
-		tlBar.add(btnAjouter);
-		tlBar.add(btnSuprimer);
-		tlBar.add(lblId);
-		tlBar.add(cmbId);
-		tlBar.add(btnQuitter);
+		txtNom = new JTextField();
+		txtNom.setBounds(142, 5, 198, 19);
+		lblNom.setLabelFor(txtNom);
+		paneChamps.add(txtNom);
+		txtNom.setColumns(10);
 		
-		scroll.setBackground(new Color(128,128,128));
-		gbc_tlBar.gridwidth = 2;
-		gbc_tlBar.fill = GridBagConstraints.BOTH;
-		gbc_tlBar.gridx = 0;
-		gbc_tlBar.gridy = 1;
-		contentPane.add(scroll, gbc_tlBar);
+		JLabel lblPrenom = new JLabel("Prenom");
+		lblPrenom.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblPrenom.setBounds(20, 35, 117, 19);
+		paneChamps.add(lblPrenom);
+		
+		txtPrenom = new JTextField();
+		lblPrenom.setLabelFor(txtPrenom);
+		txtPrenom.setColumns(10);
+		txtPrenom.setBounds(142, 33, 198, 19);
+		paneChamps.add(txtPrenom);
+		
+		JLabel lblTel = new JLabel("Telephone");
+		lblTel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblTel.setBounds(20, 95, 117, 19);
+		paneChamps.add(lblTel);
+		
+		txtTel = new JTextField();
+		lblTel.setLabelFor(txtTel);
+		txtTel.setColumns(10);
+		txtTel.setBounds(142, 93, 198, 19);
+		paneChamps.add(txtTel);
+		
+		JLabel lblEmail = new JLabel("Courriel");
+		lblEmail.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblEmail.setBounds(20, 128, 117, 19);
+		paneChamps.add(lblEmail);
+		
+		txtEmail = new JTextField();
+		lblEmail.setLabelFor(txtEmail);
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(142, 126, 198, 19);
+		paneChamps.add(txtEmail);
+		
+		JLabel lblAdresse = new JLabel("Adresse");
+		lblAdresse.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblAdresse.setBounds(20, 159, 117, 19);
+		paneChamps.add(lblAdresse);
+		
+		txtAdresse = new JTextField();
+		lblAdresse.setLabelFor(txtAdresse);
+		txtAdresse.setColumns(10);
+		txtAdresse.setBounds(142, 157, 198, 19);
+		paneChamps.add(txtAdresse);
+		
+		txtPoids = new JTextField();
+		txtPoids.setColumns(10);
+		txtPoids.setBounds(142, 188, 198, 19);
+		paneChamps.add(txtPoids);
+		
+		JLabel lblPoids = new JLabel("Poids");
+		lblPoids.setLabelFor(txtPoids);
+		lblPoids.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblPoids.setBounds(20, 190, 117, 19);
+		paneChamps.add(lblPoids);
+		
+		JLabel lblGroupage = new JLabel("Groupe Sanguin");
+		lblGroupage.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblGroupage.setBounds(20, 219, 117, 19);
+		paneChamps.add(lblGroupage);
+		
+		txtGroupage = new JTextField();
+		lblGroupage.setLabelFor(txtGroupage);
+		txtGroupage.setColumns(10);
+		txtGroupage.setBounds(142, 217, 198, 19);
+		paneChamps.add(txtGroupage);
+		
+		JLabel lblSexe = new JLabel("Sexe");
+		lblSexe.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblSexe.setBounds(20, 250, 117, 19);
+		paneChamps.add(lblSexe);
+		
+		JLabel lblDateNaissance = new JLabel("Date Naissance");
+		lblDateNaissance.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblDateNaissance.setBounds(20, 64, 117, 19);
+		paneChamps.add(lblDateNaissance);
+		
+		txtDateNaissance = new JTextField();
+		txtDateNaissance.setColumns(10);
+		txtDateNaissance.setBounds(142, 62, 198, 19);
+		paneChamps.add(txtDateNaissance);
+		
+		cmbSexe = new JComboBox<>();
+		cmbSexe.setModel(new DefaultComboBoxModel<>(new String[] {"Male", "Femelle"}));
+		cmbSexe.setBounds(142, 246, 198, 21);
+		paneChamps.add(cmbSexe);
+		
+		JPanel paneTable = new JPanel();
+		paneTable.setBackground(new Color(0, 128, 255));
+		paneTable.setBounds(370, 70, 545, 234);
+		contentPane.add(paneTable);
+		paneTable.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 525, 187);
+		paneTable.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"
+			}
+		));
+		table.getColumnModel().getColumn(2).setPreferredWidth(90);
+		
+		JPanel panelBouton = new JPanel();
+		panelBouton.setBackground(new Color(0, 128, 255));
+		panelBouton.setBounds(370, 315, 545, 50);
+		contentPane.add(panelBouton);
+		panelBouton.setLayout(null);
+		
+		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setBackground(new Color(255, 128, 0));
+		btnAjouter.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		btnAjouter.setBounds(132, 5, 85, 35);
+		panelBouton.add(btnAjouter);
+		
+		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		btnModifier.setBackground(new Color(255, 128, 0));
+		btnModifier.setBounds(238, 5, 102, 35);
+		panelBouton.add(btnModifier);
+		
+		JButton btnSuprimer = new JButton("Suprimer");
+		btnSuprimer.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		btnSuprimer.setBackground(new Color(255, 128, 0));
+		btnSuprimer.setBounds(10, 5, 95, 35);
+		panelBouton.add(btnSuprimer);
+		
+		JButton btnLister = new JButton("Afficher tout");
+		btnLister.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		btnLister.setBackground(new Color(255, 128, 64));
+		btnLister.setBounds(757, 25, 158, 35);
+		contentPane.add(btnLister);
+		
+		JLabel lblDonneur = new JLabel("Chercher un donneur");
+		lblDonneur.setBackground(new Color(0, 128, 255));
+		lblDonneur.setForeground(new Color(255, 255, 0));
+		lblDonneur.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblDonneur.setBounds(382, 25, 196, 28);
+		contentPane.add(lblDonneur);
+		
+		cmbNom = new JComboBox<>(getListeCBox("id"));
+		cmbNom.setBounds(588, 31, 159, 21);
+		contentPane.add(cmbNom);
 	}
 
 /*============================================================================================================= */
@@ -116,229 +238,61 @@ public class VueDonneur extends JFrame implements actionEvent{
 
 	public void actionBtn(ActionEvent ev){
 		if(ev.getSource()== btnLister){
-			//DefaultTableModel model = remplirTable("","0");
 			table.setModel(remplirTable("",""));
-			
+			viderChamps();
 
-		}else if(ev.getSource()== btnModifierChamps){
-			String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur à modifier");
-
-			modifierDonneur(strCle);
-			
+		}else if(ev.getSource()== btnModifier){
+			modifierDonneur();
 
 		}else if(ev.getSource()== btnSuprimer){
 			Suprimer();
 
 		}else if(ev.getSource()== btnAjouter){
-			String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur à ajouter");
-			ajouter(strCle);
-
-		}else if(ev.getSource()== btnQuitter){
-		
-			System.exit(0);
+			//String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du Donneur a ajouter");
+			ajouter();
 
 		}
-		styleTable(new Color(12,128,144), Color.white);
 	}
 
 	public void itemStateChanged(ItemEvent e) {
-		if(e.getSource()== cmbId){
-			DefaultTableModel model = remplirTable("NOM",(String)cmbId.getSelectedItem());
+		if(e.getSource()== cmbNom){
+			String nom = (String)cmbNom.getSelectedItem();
+			nom = nom.split("_")[0];
+			DefaultTableModel model = remplirTable("NOM",nom);
 			table.setModel(model);
-			styleTable(new Color(123,104,238), Color.yellow);
+			remplirChamps(nom);
 			
 		}
 	}
-	@Override
-	public void action() {
-		cmbId.addItemListener(this::itemStateChanged);
-		btnLister.addActionListener(this::actionBtn);
-		btnAjouter.addActionListener(this::actionBtn);
-		btnModifierChamps.addActionListener(this::actionBtn);
-		btnSuprimer.addActionListener(this::actionBtn);
-		btnQuitter.addActionListener(this::actionBtn);
-		
-	}
 
-/*============================================================================================================= */
-/*										S-A-R     															    */
-/*=============================================================================================================*/
-public void Suprimer() {
-	String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur à suprimer");
-	if(ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).size() == 0){
-			JOptionPane.showMessageDialog(null, "le donneur "+ strCle +" n' existe pas!!");
-			
-	}else{
-		int cle = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0).getId();
-		ctrDonneur.CtrDonneur_Enlever(cle);
-
-		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
-		cmbId.removeAll();
-		cmbId.setModel(modelNum);
-
-		//sauvgarder();
-		JOptionPane.showMessageDialog(null,"le donneur "+ strCle + " est suprimer avec succès");
-
-	}
-	DefaultTableModel modelTable = remplirTable("","");
-	table.setModel(modelTable);
-
-}
-public void ajouter(String strCle) {
- 	//String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur a ajouter");
-	 if(ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).size() != 0){
-			int rep = JOptionPane.showConfirmDialog(null, "le livre du numéro "+ strCle +"  existe déjà!!\n Voulez-vous le modifier?","AJOUT", JOptionPane.YES_NO_OPTION);
-			if(rep==0){
-				modifierDonneur(strCle);
-			}else{	
-				DefaultTableModel modelTable = remplirTable("","");
-				table.setModel(modelTable);
-			   }
-		}else{
-		int cle= ctrDonneur.CtrDonneur_EnregistrerParRequete("INSERT INTO donneur(ID_DONNEUR,NOM) VALUES(0,?)",strCle);
-		//Donneur donneur = ctrDonneur.CtrDonneur_GetById(cle);
-
-		ArrayList<String> data = new ArrayList<String>(){{add(strCle);add(null);add(null);
-			add(null);add(null);add(null);add(null);add(null);add(null);}};
-		String[] retour = paneString(data,new ArrayList<String>(){{add("Nom");
-		add("Prenom");
-		add("Date Naissance");
-		add("Telephone");
-		add("Courriel");
-		add("Adresse");
-		add("Poids");
-		add("Groupe sangaine");
-		add("Sexe");}},"                         Entrez les informations du votre nouveau donneur");
-		if (retour != null){
-			Donneur donneur = new Donneur(cle,retour[0],retour[1],retour[2],retour[3],retour[4],retour[5],Double.parseDouble(retour[6]),retour[7],retour[8]);
-
-			ctrDonneur.CtrDonneur_Modifier(donneur);
-
-			DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
-			cmbId.removeAll();
-			cmbId.setModel(modelNum);
-
-			DefaultTableModel modelTable = remplirTable("ID_DONNEUR",String.valueOf(cle));
-//			DefaultTableModel modelTable = remplirTable("","");
-			table.setModel(modelTable);
-		}	
-	}
-
-}
-public void modifierDonneur(String strCle) {
-	//ArrayList<Livre> listeLivres = remplirArrayliste();
-	//String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du donneur a ajouter");
-	if(ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).size() == 0){
-		   int rep = JOptionPane.showConfirmDialog(null, "le donneur "+ strCle +" n' existe pas!!\n Voulez-vous l'ajouter ?","MODIFIER", JOptionPane.YES_NO_OPTION);
-		   if(rep==0){
-			   ajouter(strCle);
-		   }else{	
-			DefaultTableModel modelTable = remplirTable("","");
-			table.setModel(modelTable);
-		   }
-			  
-	}else{
-		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0);
-		ArrayList<String> data = new ArrayList<String>(){{
-			add(donneur.getNom());
-			add(donneur.getPrenom());
-			add(donneur.getDateNaissance());
-			add(donneur.getTelphone());
-			add(donneur.getEmail());
-			add(donneur.getAddresse());
-			add(String.valueOf(donneur.getPoids()));
-			add(donneur.getGroupage());
-			add(donneur.getSexe());}};
-
-		String[] retour = paneString(data,new ArrayList<String>(){{add("Nom");
-		add("Prenom");
-		add("Date Naissance");
-		add("Telephone");
-		add("Courriel");
-		add("Adresse");
-		add("Poids");
-		add("Groupe sangaine");
-		add("Sexe");}},"                         Modifiez les informations du votre donneur");
-		if (retour != null){
-			Donneur donneurModifier = new Donneur(donneur.getId(),retour[0],retour[1],retour[2],retour[3],retour[4],retour[5],Double.parseDouble(retour[6]),retour[7],retour[8]);
-			ctrDonneur.CtrDonneur_Modifier(donneurModifier);
-		}
-		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
-		cmbId.removeAll();
-		cmbId.setModel(modelNum);
-
-		DefaultTableModel modelTable = remplirTable("ID_DONNEUR",String.valueOf(donneur.getId()));
-		table.setModel(modelTable);
-}
-
-}
-public String[] paneString(ArrayList<String> data,ArrayList<String> listeChamps,String titre) {
-	String[] retour = new String[data.size()];
-			Dimension d =new Dimension(350,20);
-			Color cl = new Color(102,178,255);
-			ArrayList<JTextField> listeJtxt = new ArrayList<>();
-
-			JPanel panePrincipal = new JPanel(new GridBagLayout());
-			JPanel gPane = new JPanel(new GridLayout(listeChamps.size()+2,1,0,5));
-			GridBagConstraints c = new GridBagConstraints();	
-			JLabel lblTitre = new JLabel(titre);
-			lblTitre.setFont(new Font("Serif", Font.BOLD, 20));
-			lblTitre.setForeground(Color.blue);
-				gPane.add(lblTitre);
-				for(int i=0;i<listeChamps.size();i++){
-					JPanel pane = new JPanel();
-					JTextField jtxt = new JTextField(data.get(i));
-					jtxt.setPreferredSize(d);
-					JLabel lbl = new JLabel(listeChamps.get(i));
-					lbl.setPreferredSize(new Dimension(50,20));
-					lbl.setLabelFor(jtxt);
-					listeJtxt.add(jtxt);
-					pane.add(lbl);
-					pane.add(jtxt);
-					gPane.add(pane);
 	
-				}
-				c.weightx = 0.0;
-				c.gridx = 0;
-				c.gridy = 0;
-				c.gridwidth=1;
-				panePrincipal.add(gPane,c);
-				
-	
-			int res = JOptionPane.showConfirmDialog(null,panePrincipal,"Modification Livre",JOptionPane.YES_NO_CANCEL_OPTION);
-			if(res == JOptionPane.YES_OPTION){
-				for(int i=0;i<listeJtxt.size();i++){
-					retour[i]= listeJtxt.get(i).getText();
-				}
-				
-			}else{
-				retour = null;
-			}  
-		//}
-	
-	
-	return retour;        
-
-}
-
 /*============================================================================================================= */
 /*										Fonctions																*/
 /*=============================================================================================================*/
-public int calculerTaille() {
-	return ctrDonneur.CtrDonneur_GetAll().size();
-}
+public void viderChamps() {
+	txtNom.setText("");
+	txtPrenom.setText("");
+	txtTel.setText("");
+	txtEmail.setText("");
+	txtAdresse.setText("");
+	txtPoids.setText("");
+	txtGroupage.setText("");
+	txtDateNaissance.setText("");
 
+	
+}
 public DefaultTableModel remplirTable(String champs,String valeur) {
 	ArrayList<Donneur> listeDonneurs = new ArrayList<>();
+	
 	if(champs.equals("")){
 		listeDonneurs = (ArrayList<Donneur>) ctrDonneur.CtrDonneur_GetAll(); 	
 
 	}else{
-		String nom = valeur.split("_")[0];
-		listeDonneurs = (ArrayList<Donneur>) ctrDonneur.CtrDonneur_GetByChamps(champs, nom);
+		
+		listeDonneurs = (ArrayList<Donneur>) ctrDonneur.CtrDonneur_GetByChamps(champs, valeur);
 
 	}
-	String[] column = {"Nom","Prenom","Date Naissance","Tel","Courrile","Adresse","Poids","Groupe Sang","Sexe"};
+	String[] column = {"Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"};
 	DefaultTableModel model = new DefaultTableModel(column,0);
 	
 	
@@ -366,67 +320,106 @@ public  String[] getListeCBox(String choix){
 		return retour;
 	
 	}
+/*============================================================================================================= */
+/*										S-A-R     															    */
+/*=============================================================================================================*/
+public void Suprimer() {
+	if(!txtNom.getText().equals("") & txtNom.getText() != null ){
+		String strCle = txtNom.getText();
+		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous suprimer:\n"+ strCle ,"SOUPRESSION", JOptionPane.YES_NO_OPTION);
+		if(rep==0){
+		int cle = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0).getId();
+		ctrDonneur.CtrDonneur_Enlever(cle);
 
-public DefaultTableModel imageTable() {
-	entete = table.getTableHeader();
-	entete.setFont(new Font("Serif", Font.BOLD, 20));
-	entete.setBackground(Color.orange);//new Color(128,128,128));//new Color(105,105,105));
-	entete.setForeground(Color.BLACK);
+		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
+		cmbNom.removeAll();
+		cmbNom.setModel(modelNum);
 
-	String[] column = {"Bienvenue à la gestion d'une bibliothéque "};
-	table.setRowHeight(558);
-	DefaultTableModel model = new DefaultTableModel(column,0)
-	{
-		
-		public Class getColumnClass(int column)
-		{
-			switch (column)
-			{
-				case 0: return Icon.class;
-				default: return super.getColumnClass(column);
-			}
+		//sauvgarder();
+		//JOptionPane.showMessageDialog(null,"le Donneur "+ strCle + " est suprimer avec succès");
+		}	
+	}else{
+		JOptionPane.showMessageDialog(null,"Choisissez d'abord le nom!?");
+	}
+	DefaultTableModel modelTable = remplirTable("","");
+	table.setModel(modelTable);
+	viderChamps();
+}
+public void ajouter() {
+	if(!txtNom.getText().equals("") & txtNom.getText() != null ){
+		String strCle = txtNom.getText();
+		if(ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).size() != 0){
+				int rep = JOptionPane.showConfirmDialog(null, "le donneur "+ strCle +"  existe déjà!!\n Voulez-vous le modifier?","AJOUT", JOptionPane.YES_NO_OPTION);
+				if(rep==0){
+					modifierDonneur();
+				}			
+		}else{
+
+		Donneur donneur = new Donneur(txtNom.getText(),txtPrenom.getText(),txtDateNaissance.getText(),txtTel.getText(),txtEmail.getText(),txtAdresse.getText(),Double.parseDouble(txtPoids.getText()),txtGroupage.getText(),(String)cmbSexe.getSelectedItem());
+		ctrDonneur.CtrDonneur_Enregistrer(donneur);
+
+				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
+				cmbNom.removeAll();
+				cmbNom.setModel(modelNum);
+
+				DefaultTableModel modelTable = remplirTable("","");
+				table.setModel(modelTable);
+			}	
+		}else{
+			JOptionPane.showMessageDialog(null,"Remplir les champs !?");
 		}
-	};
-
-	ImageIcon img =  new ImageIcon("src\\images\\livre2.jpg");
-	model.addRow(new Object[]{img});
-
-	return model;	
-}
-public void btnStyle(JButton btn){
-	btn.setSize(new Dimension(200,20));
-	btn.setBackground(new Color(12,128,144));		
-	btn.setForeground(Color.white);
-	btn.setFont( new Font("Serif", Font.BOLD, 18));
-	btn.setOpaque(true);
+		viderChamps();
 
 }
 
-public void styleTable(Color bgColor,Color pColor) {
-	JTableHeader entete = table.getTableHeader();
-	entete.setFont(new Font("Serif", Font.BOLD, 18));
-	entete.setBackground(new Color(128,128,128));//new Color(105,105,105));
-	entete.setForeground(Color.white);
-	TableColumnModel columnModelEntete = entete.getColumnModel();
-	columnModelEntete.getColumn(0).setPreferredWidth(5);
-	columnModelEntete.getColumn(1).setPreferredWidth(400);
-	columnModelEntete.getColumn(2).setPreferredWidth(5);
-	columnModelEntete.getColumn(3).setPreferredWidth(5);
-	columnModelEntete.getColumn(4).setPreferredWidth(5);
-	columnModelEntete.getColumn(5).setPreferredWidth(100);
-	TableColumnModel columnModel = table.getColumnModel();
-	columnModel.getColumn(0).setPreferredWidth(5);
-	columnModel.getColumn(1).setPreferredWidth(400);
-	columnModel.getColumn(2).setPreferredWidth(5);
-	columnModel.getColumn(3).setPreferredWidth(5);
-	columnModel.getColumn(4).setPreferredWidth(5);
-	columnModel.getColumn(5).setPreferredWidth(100);
-	table.setBackground(bgColor);
-	table.setForeground(pColor);
-	table.setRowHeight(20);
-	table.setFont(new Font("Serif", Font.BOLD, 18));
-	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-}
+public void modifierDonneur() {
+	if(!txtNom.getText().equals("") & txtNom.getText() != null ){
+		String strCle = txtNom.getText();
+		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer les modifications portées sur :\n"+ strCle ,"MODIFICATION", JOptionPane.YES_NO_OPTION);
+		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0);
 
-}
+		if(rep==JOptionPane.YES_OPTION){
+		
+			Donneur donneurNew = new Donneur(donneur.getId(),txtNom.getText(),txtPrenom.getText(),txtDateNaissance.getText(),txtTel.getText(),txtEmail.getText(),txtAdresse.getText(),Double.parseDouble(txtPoids.getText()),txtGroupage.getText(),(String)cmbSexe.getSelectedItem());
+	
+			ctrDonneur.CtrDonneur_Modifier(donneurNew);
+	
+			DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
+			cmbNom.removeAll();
+			cmbNom.setModel(modelNum);
+		}	
+	}else{
+		JOptionPane.showMessageDialog(null,"Choisissez d'abord le nom!?");
+	}
+	DefaultTableModel modelTable = remplirTable("","");
+	table.setModel(modelTable);
+	viderChamps();
 
+
+
+	}
+	public void remplirChamps(String nom) {
+		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NOM", nom).get(0);
+		txtNom.setText(donneur.getNom());
+		txtPrenom.setText(donneur.getPrenom());
+		txtDateNaissance.setText(donneur.getDateNaissance());
+		txtTel.setText(donneur.getTelphone());
+		txtEmail.setText(donneur.getEmail());
+		txtAdresse.setText(donneur.getAddresse());
+		txtPoids.setText(String.valueOf(donneur.getPoids()));
+		txtGroupage.setText(donneur.getGroupage());
+		cmbSexe.setSelectedItem(donneur.getSexe());
+		
+
+	}
+
+	@Override
+	public void action() {
+		cmbNom.addItemListener(this::itemStateChanged);
+		btnLister.addActionListener(this::actionBtn);
+		btnAjouter.addActionListener(this::actionBtn);
+		btnModifier.addActionListener(this::actionBtn);
+		btnSuprimer.addActionListener(this::actionBtn);
+		
+	}	
+}

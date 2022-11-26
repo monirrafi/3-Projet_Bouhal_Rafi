@@ -24,8 +24,8 @@ public class DaoUtilisateur implements IUtilisateur {
     private static final String GET_ALL = "SELECT * FROM Utilisateur ORDER BY ID_Utilisateur";
     private static final String GET_BY_ID = "SELECT * FROM Utilisateur WHERE ID_Utilisateur=?";
     private static final String GET_BY_CHAMPS = "SELECT * FROM Utilisateur WHERE ";
-    private static final String ENREGISTRER = "INSERT INTO Utilisateur VALUES(0,?,?,?, ?,?,?, ?,?,?,?)";
-    private static final String MODIFIER = "UPDATE Utilisateur SET NOM=?,PRENOM=?,TEL=?,EMAIL=?,USERNAME=?,MOTDEPASSE=?,NOVEAU=? WHERE ID_Utilisateur=?";
+    private static final String ENREGISTRER = "INSERT INTO Utilisateur VALUES(0,?,?,?, ?,?,?, ?)";
+    private static final String MODIFIER = "UPDATE Utilisateur SET NOM=?,PRENOM=?,TEL=?,EMAIL=?,USERNAME=?,MOTDEPASSE=?,NIVEAU=? WHERE ID_Utilisateur=?";
 
     // Singleton de connexion à la BD
     // getConnexion() est devenu une zonne critique. 
@@ -215,8 +215,8 @@ public class DaoUtilisateur implements IUtilisateur {
             stmt.setString(4, Utilisateur.getEmail());
             stmt.setString(5, Utilisateur.getUserName());
             stmt.setString(6, Utilisateur.getMotPasse());
-            stmt.setInt(7, Utilisateur.getId());
-            stmt.setInt(8, Utilisateur.getNiveau());
+            stmt.setInt(7, Utilisateur.getNiveau());
+            stmt.setInt(8, Utilisateur.getId());
             return stmt.executeUpdate();
         } catch (SQLException e) {
             // e.printStackTrace();

@@ -1,41 +1,48 @@
 package Projet_Collecte_Sang.dao_Utilisateur.vueUtilisateur;
-
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Projet_Collecte_Sang.actionEvent;
 import Projet_Collecte_Sang.dao_Utilisateur.controleurUtilisateur.ControleurUtilisateur;
 import Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur.Utilisateur;
 
-import java.util.*;
-import java.awt.event.*;
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
+import java.awt.Color;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 public class FormulaireUser extends JFrame implements actionEvent{
-
+	private ControleurUtilisateur ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
 	private JPanel contentPane;
-	static JScrollPane scroll =new JScrollPane();
-
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtTel;
 	private JTextField txtEmail;
 	private JTextField txtNiveau;
 	private JPasswordField passwordField;
+	private JTable table;
 	private JTextField txtUserName;
-	private JTable table = new JTable();
-	private JButton btnAjouter = new JButton();
-	private JButton btnModifier = new JButton();
-	private JButton btnLister = new JButton();
-	private JButton btnSuprimer = new JButton();
-	private JComboBox<String> cmbNom = new JComboBox<>();
-	private ControleurUtilisateur ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
-
+	JButton btnAjouter = new JButton();
+	JButton btnModifier = new JButton();
+	JButton btnSuprimer = new JButton();
+	JButton btnLister = new JButton();
+	JComboBox<String> cmbNom = new JComboBox<>();
+		
 	public FormulaireUser() {
-		action();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 950, 431);
 		contentPane = new JPanel();
@@ -156,25 +163,25 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		contentPane.add(panelBouton);
 		panelBouton.setLayout(null);
 		
-		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter = new JButton("Ajouter");
 		btnAjouter.setBackground(new Color(255, 128, 0));
 		btnAjouter.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnAjouter.setBounds(132, 5, 85, 35);
 		panelBouton.add(btnAjouter);
 		
-		JButton btnModifier = new JButton("Modifier");
+		btnModifier = new JButton("Modifier");
 		btnModifier.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnModifier.setBackground(new Color(255, 128, 0));
 		btnModifier.setBounds(238, 5, 102, 35);
 		panelBouton.add(btnModifier);
 		
-		JButton btnSuprimer = new JButton("Suprimer");
+		btnSuprimer = new JButton("Suprimer");
 		btnSuprimer.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnSuprimer.setBackground(new Color(255, 128, 0));
 		btnSuprimer.setBounds(10, 5, 95, 35);
 		panelBouton.add(btnSuprimer);
 		
-		JButton btnLister = new JButton("Afficher tout");
+		btnLister = new JButton("Afficher tout");
 		btnLister.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnLister.setBackground(new Color(0, 128, 255));
 		btnLister.setBounds(757, 25, 158, 35);
@@ -186,10 +193,11 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		lblUtilisateur.setBounds(475, 29, 196, 28);
 		contentPane.add(lblUtilisateur);
 		
-		cmbNom = new JComboBox<String>(getListeCBox("id"));
+		cmbNom = new JComboBox<>(getListeCBox("id"));
 		cmbNom.setBounds(681, 25, 66, 35);
 		contentPane.add(cmbNom);
 	}
+
 /*============================================================================================================= */
 /*										Ecouetuers																*/
 /*============================================================================================================= */
@@ -223,16 +231,6 @@ public class FormulaireUser extends JFrame implements actionEvent{
 		}
 	}
 
-	@Override
-	public void action() {
-		cmbNom.addItemListener(this::itemStateChanged);
-		btnLister.addActionListener(this::actionBtn);
-		btnAjouter.addActionListener(this::actionBtn);
-		btnModifier.addActionListener(this::actionBtn);
-		btnSuprimer.addActionListener(this::actionBtn);
-		
-		
-	}
 	
 /*============================================================================================================= */
 /*										Fonctions																*/
@@ -249,6 +247,7 @@ public void viderChamps() {
 }
 public DefaultTableModel remplirTable(String champs,String valeur) {
 	ArrayList<Utilisateur> listeUtilisateurs = new ArrayList<>();
+	
 	if(champs.equals("")){
 		listeUtilisateurs = (ArrayList<Utilisateur>) ctrUtilisateur.CtrUtilisateur_GetAll(); 	
 
@@ -319,10 +318,12 @@ public void ajouter() {
 					modifierUtilisateur();
 				}			
 		}else{
-			int cle= ctrUtilisateur.CtrUtilisateur_EnregistrerParRequete("INSERT INTO Utilisateur(ID_Utilisateur,NOM) VALUES(0,?)",strCle);
-				Utilisateur Utilisateur = new Utilisateur(cle,txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
+//			int cle= ctrUtilisateur.CtrUtilisateur_EnregistrerParRequete("INSERT INTO Utilisateur(ID_Utilisateur,NOM) VALUES(0,?)",strCle);
+//				Utilisateur Utilisateur = new Utilisateur(cle,txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
+//ctrUtilisateur.CtrUtilisateur_Modifier(Utilisateur);
 
-				ctrUtilisateur.CtrUtilisateur_Modifier(Utilisateur);
+		Utilisateur Utilisateur = new Utilisateur(txtNom.getText(),txtPrenom.getText(),txtTel.getText(),txtEmail.getText(),txtUserName.getText(),passwordField.getText(),Integer.parseInt(txtNiveau.getText()));
+		ctrUtilisateur.CtrUtilisateur_Enregistrer(Utilisateur);
 
 				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
 				cmbNom.removeAll();
@@ -402,10 +403,18 @@ public void modifierUtilisateur() {
 		txtPrenom.setText(utilisateur.getPrenom());
 		txtTel.setText(utilisateur.getTelphone());
 		txtEmail.setText(utilisateur.getEmail());
+		txtNiveau.setText(String.valueOf(utilisateur.getNiveau()));
 		txtUserName.setText(utilisateur.getUserName());
 		passwordField.setText(utilisateur.getMotPasse());
+	}
 
-	
+	@Override
+	public void action() {
+		cmbNom.addItemListener(this::itemStateChanged);
+		btnLister.addActionListener(this::actionBtn);
+		btnAjouter.addActionListener(this::actionBtn);
+		btnModifier.addActionListener(this::actionBtn);
+		btnSuprimer.addActionListener(this::actionBtn);
 		
 	}	
 }

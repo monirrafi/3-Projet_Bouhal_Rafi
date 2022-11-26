@@ -6,12 +6,15 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import com.mysql.cj.util.Util;
+
 import Projet_Collecte_Sang.dao_Utilisateur.controleurUtilisateur.ControleurUtilisateur;
 import Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur.DaoUtilisateur;
 import Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur.Utilisateur;
 
 public class ConnexionForm extends JFrame {
-
+        private int niveau;
+        private Acceuil acceuil;
         private JPanel contentPane;
         private JTextField txtUser;
         private JPasswordField passwordField;
@@ -65,11 +68,17 @@ public class ConnexionForm extends JFrame {
             btn.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Utilisateur user = ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText()).get(0);
-                    String userName = user.getNom();
+                    String userName = user.getUserName();
                     String pass = user.getMotPasse();
                     if(txtUser.getText().equals(userName)) {
                         if(passwordField.getText().equals(pass)){
-                            
+                           Utilisateur utilisateur = ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText()).get(0);
+                            //setNiveau(utilisateur.getNiveau());
+                            if(utilisateur.getNiveau()==1){
+                                acceuil = new Acceuil();
+                                
+                            }
+
                         }
                     }else{
                         JOptionPane.showMessageDialog(null, "Le user name est incorrect!\n Essayez une autre fois");
@@ -80,6 +89,17 @@ public class ConnexionForm extends JFrame {
             contentPane.add(btn);
 
         }
+
+        public int getNiveau() {
+            return niveau;
+        }
+
+        public void setNiveau(int niveau) {
+            this.niveau = niveau;
+        }
+
+
+        
     
     }
         
