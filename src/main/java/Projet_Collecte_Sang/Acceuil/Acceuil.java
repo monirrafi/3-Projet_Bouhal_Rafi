@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import Projet_Collecte_Sang.actionEvent;
+import Projet_Collecte_Sang.dao_Collecte.vueCollecte.VueCollecte;
 import Projet_Collecte_Sang.dao_Donnneur.vueDonneur.VueDonneur;
 import Projet_Collecte_Sang.dao_Utilisateur.controleurUtilisateur.ControleurUtilisateur;
 import Projet_Collecte_Sang.dao_Utilisateur.modelUtilisateur.Utilisateur;
@@ -17,6 +18,7 @@ import Projet_Collecte_Sang.dao_Utilisateur.vueUtilisateur.FormulaireUser;
 public class Acceuil extends JFrame implements actionEvent{
 
 	private JPanel contentPane;
+	private JPanel paneNiveau2;
 	static int niveau=0;
 	private JButton btnCollecte = new JButton();
 	private JButton btnDon = new JButton();
@@ -29,6 +31,7 @@ public class Acceuil extends JFrame implements actionEvent{
 	private ControleurUtilisateur  ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
 	private VueDonneur vueDonneur;
 	private FormulaireUser vueUtilisateur;
+	private VueCollecte vueCollecte;
 
 	public Acceuil() {
 		action();
@@ -113,10 +116,10 @@ public class Acceuil extends JFrame implements actionEvent{
 
 	}
 	public int connexionForm() {
-		JPanel contentPane = new JPanel(new GridLayout(3,1));
-		contentPane.setBackground(new Color(0, 128, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setPreferredSize(new Dimension(600,300));
+		JPanel connexioPane = new JPanel(new GridLayout(3,1));
+		connexioPane.setBackground(new Color(0, 128, 0));
+		connexioPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		connexioPane.setPreferredSize(new Dimension(600,300));
 
 		JPanel lblPane = new JPanel();
 		lblPane.setBackground(new Color(0, 128, 0));
@@ -151,11 +154,11 @@ public class Acceuil extends JFrame implements actionEvent{
 		passwordField.setPreferredSize(new Dimension(300,30));
 		passPane.add(passwordField);
 
-		contentPane.add(lblPane);
-		contentPane.add(userPane);
-		contentPane.add(passPane);
+		connexioPane.add(lblPane);
+		connexioPane.add(userPane);
+		connexioPane.add(passPane);
 
-		int res = JOptionPane.showConfirmDialog(null,contentPane,"CONNEXION",JOptionPane.YES_NO_CANCEL_OPTION);
+		int res = JOptionPane.showConfirmDialog(null,connexioPane,"CONNEXION",JOptionPane.YES_NO_CANCEL_OPTION);
 		if(res == JOptionPane.YES_OPTION){
 			ArrayList<Utilisateur> liste = (ArrayList<Utilisateur>)ctrUtilisateur.CtrUtilisateur_GetByChamps("USERNAME", txtUser.getText());
 			if(liste.size() != 0){
@@ -195,12 +198,13 @@ public class Acceuil extends JFrame implements actionEvent{
 			btnUtilisateur.setEnabled(true);
 			
 		}else if(entree==2){
-			btnCollecte.setEnabled(true);
-			btnDon.setEnabled(true);
-			btnDonneur.setEnabled(true);
-			btnLieu.setEnabled(true);
-			btnRDV.setEnabled(true);
-			
+			paneNiveau2 = new JPanel();
+			JButton btnRetour = new JButton("Retour");
+			paneNiveau2.add(btnRetour);
+			paneNiveau2.setLayout(null);
+			paneNiveau2.setBackground(new Color(128, 0, 0));
+			setContentPane(paneNiveau2);
+			repaint();
 		}
 		
 	}
@@ -210,6 +214,9 @@ public class Acceuil extends JFrame implements actionEvent{
 
 public void actionBtn(ActionEvent ev){
 	if(ev.getSource()== btnCollecte){
+		vueCollecte = new VueCollecte();
+		vueCollecte.action();
+		vueCollecte.setVisible(true);
 
 	}else if(ev.getSource()== btnDon){
 
