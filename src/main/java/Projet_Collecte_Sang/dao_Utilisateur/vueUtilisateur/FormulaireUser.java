@@ -43,7 +43,7 @@ public class FormulaireUser extends JFrame implements actionEvent{
 	JComboBox<String> cmbNom = new JComboBox<>();
 		
 	public FormulaireUser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 950, 431);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -256,12 +256,12 @@ public DefaultTableModel remplirTable(String champs,String valeur) {
 		listeUtilisateurs = (ArrayList<Utilisateur>) ctrUtilisateur.CtrUtilisateur_GetByChamps(champs, valeur);
 
 	}
-	String[] column = {"Nom","Prenom","Telephone","Courreil","User Name","Mot de passe"};
+	String[] column = {"Nom", "Prenom", "Telephone", "courriel", "Niveau", "User Name", "Mot de passe"};
 	DefaultTableModel model = new DefaultTableModel(column,0);
 	
 	
 	for(Utilisateur Utilisateur:listeUtilisateurs){
-			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getUserName(),Utilisateur.getMotPasse(),Utilisateur.getNiveau()});				
+			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getNiveau(),Utilisateur.getUserName(),Utilisateur.getMotPasse()});				
 		}
 	return model;
 
