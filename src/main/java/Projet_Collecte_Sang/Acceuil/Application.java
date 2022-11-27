@@ -9,7 +9,8 @@ public final class Application {
     }
 
     public static void main(String[] args) {
-/*          Acceuil acceuil = new Acceuil();
+/*
+        Acceuil acceuil = new Acceuil();
         acceuil.action();
         acceuil.setVisible(true);
         VueDonneur donneur = new VueDonneur();
@@ -24,9 +25,9 @@ public final class Application {
         VueCollecte vueCollecte = new VueCollecte();
         vueCollecte.action();
         vueCollecte.setVisible(true);*/
-        VueCollecte vueCollecte = new VueCollecte();
-        vueCollecte.action();
-        vueCollecte.setVisible(true);     
+        Acceuil acceuil = new Acceuil();
+        acceuil.action();
+        acceuil.setVisible(true);
 
 }
 }

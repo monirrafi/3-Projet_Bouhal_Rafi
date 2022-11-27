@@ -223,7 +223,7 @@ public  String[] getListeCBox(String choix){
 /*										S-A-R     															    */
 /*=============================================================================================================*/
 public void Suprimer() {
-	if(!((String)cmbLieu.getSelectedItem()).equals("") & ((String)cmbLieu.getSelectedItem()) != null ){
+	if(!txtOrganisateur.getText().equals("") & txtOrganisateur.getText() != null ){
 		String strCle = (String)cmbLieu.getSelectedItem();
 		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous suprimer:\n"+ strCle ,"SOUPRESSION", JOptionPane.YES_NO_OPTION);
 		if(rep==0){
@@ -242,7 +242,7 @@ public void Suprimer() {
 	viderChamps();
 }
 public void ajouter() {
-	if(!((String)cmbLieu.getSelectedItem()).equals("") & ((String)cmbLieu.getSelectedItem()) != null ){
+	if(!txtOrganisateur.getText().equals("") & txtOrganisateur.getText() != null ){
 		String strCle = (String)cmbLieu.getSelectedItem();
 		if(ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", strCle).size() != 0){
 				int rep = JOptionPane.showConfirmDialog(null, "le Collecte "+ strCle +"  existe déjà!!\n Voulez-vous le modifier?","AJOUT", JOptionPane.YES_NO_OPTION);
@@ -269,7 +269,7 @@ public void ajouter() {
 }
 
 public void modifierCollecte() {
-	if(!((String)cmbLieu.getSelectedItem()).equals("") & ((String)cmbLieu.getSelectedItem()) != null ){
+	if(!txtOrganisateur.getText().equals("") & txtOrganisateur.getText() != null ){
 		String strCle = (String)cmbLieu.getSelectedItem();
 		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer les modifications portées sur :\n"+ strCle ,"MODIFICATION", JOptionPane.YES_NO_OPTION);
 		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", strCle).get(0);

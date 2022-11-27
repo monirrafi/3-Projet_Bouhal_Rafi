@@ -198,12 +198,10 @@ public class Acceuil extends JFrame implements actionEvent{
 			btnUtilisateur.setEnabled(true);
 			
 		}else if(entree==2){
-			paneNiveau2 = new JPanel();
+			contentPane = new JPanel();
 			JButton btnRetour = new JButton("Retour");
-			paneNiveau2.add(btnRetour);
-			paneNiveau2.setLayout(null);
-			paneNiveau2.setBackground(new Color(128, 0, 0));
-			setContentPane(paneNiveau2);
+			contentPane.add(btnRetour);
+			setContentPane(contentPane);
 			repaint();
 		}
 		

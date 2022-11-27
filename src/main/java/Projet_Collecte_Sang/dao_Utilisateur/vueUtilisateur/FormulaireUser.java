@@ -256,12 +256,12 @@ public DefaultTableModel remplirTable(String champs,String valeur) {
 		listeUtilisateurs = (ArrayList<Utilisateur>) ctrUtilisateur.CtrUtilisateur_GetByChamps(champs, valeur);
 
 	}
-	String[] column = {"Nom","Prenom","Telephone","Courreil","User Name","Mot de passe"};
+	String[] column = {"Nom", "Prenom", "Telephone", "courriel", "Niveau", "User Name", "Mot de passe"};
 	DefaultTableModel model = new DefaultTableModel(column,0);
 	
 	
 	for(Utilisateur Utilisateur:listeUtilisateurs){
-			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getUserName(),Utilisateur.getMotPasse(),Utilisateur.getNiveau()});				
+			model.addRow(new Object[]{Utilisateur.getNom(),Utilisateur.getPrenom(),Utilisateur.getTelphone(),Utilisateur.getEmail(),Utilisateur.getNiveau(),Utilisateur.getUserName(),Utilisateur.getMotPasse()});				
 		}
 	return model;
 
