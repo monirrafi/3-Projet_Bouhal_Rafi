@@ -27,7 +27,7 @@ public class VueCollecte extends JFrame implements actionEvent{
 	JButton btnSuprimer = new JButton();
 	JButton btnLister = new JButton();
 	JComboBox<String> cmbNom = new JComboBox<>();
-		
+	JComboBox<String> cmbLieu = new JComboBox<>();	
 	public VueCollecte() {
 		action();
 		setBackground(new Color(240, 240, 240));
@@ -58,13 +58,20 @@ public class VueCollecte extends JFrame implements actionEvent{
 		lblLieu.setBounds(20, 7, 117, 19);
 		lblLieu.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		paneChamps.add(lblLieu);
+		String[] valeurs = {"1","2","3"};
+		cmbLieu = new JComboBox<>(valeurs);
+		cmbLieu.setBounds(142, 5, 198, 19);
+		lblLieu.setLabelFor(cmbLieu);
+		paneChamps.add(cmbLieu);
+		//cmbLieu.setColumns(10);
 		
+/*	
 		txtLieu = new JTextField();
 		txtLieu.setBounds(142, 5, 198, 19);
 		lblLieu.setLabelFor(txtLieu);
 		paneChamps.add(txtLieu);
 		txtLieu.setColumns(10);
-		
+*/		
 		JLabel lblType = new JLabel("Type Collecte");
 		lblType.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		lblType.setBounds(20, 35, 117, 19);
@@ -168,7 +175,7 @@ public class VueCollecte extends JFrame implements actionEvent{
 /*										Fonctions																*/
 /*=============================================================================================================*/
 public void viderChamps() {
-	txtLieu.setText("");
+	//cmbLieu.    setText("");
 	txtType.setText("");
 	txtDateCollecte.setText("");
 	txtOrganisateur.setText("");
@@ -211,13 +218,13 @@ public  String[] getListeCBox(String choix){
 		
 		return retour;
 	
-	}
+}
 /*============================================================================================================= */
 /*										S-A-R     															    */
 /*=============================================================================================================*/
 public void Suprimer() {
-	if(!txtLieu.getText().equals("") & txtLieu.getText() != null ){
-		String strCle = txtLieu.getText();
+	if(!((String)cmbLieu.getSelectedItem()).equals("") & ((String)cmbLieu.getSelectedItem()) != null ){
+		String strCle = (String)cmbLieu.getSelectedItem();
 		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous suprimer:\n"+ strCle ,"SOUPRESSION", JOptionPane.YES_NO_OPTION);
 		if(rep==0){
 		int cle = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", strCle).get(0).getId();
@@ -235,8 +242,8 @@ public void Suprimer() {
 	viderChamps();
 }
 public void ajouter() {
-	if(!txtLieu.getText().equals("") & txtLieu.getText() != null ){
-		String strCle = txtLieu.getText();
+	if(!((String)cmbLieu.getSelectedItem()).equals("") & ((String)cmbLieu.getSelectedItem()) != null ){
+		String strCle = (String)cmbLieu.getSelectedItem();
 		if(ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", strCle).size() != 0){
 				int rep = JOptionPane.showConfirmDialog(null, "le Collecte "+ strCle +"  existe déjà!!\n Voulez-vous le modifier?","AJOUT", JOptionPane.YES_NO_OPTION);
 				if(rep==0){
@@ -244,7 +251,7 @@ public void ajouter() {
 				}			
 		}else{
 
-		Collecte collecte = new Collecte(Integer.parseInt(txtLieu.getText()),txtType.getText(),txtDateCollecte.getText(),txtOrganisateur.getText());
+		Collecte collecte = new Collecte(Integer.parseInt(strCle),txtType.getText(),txtDateCollecte.getText(),txtOrganisateur.getText());
 		ctrCollecte.CtrCollecte_Enregistrer(collecte);
 
 				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
@@ -262,14 +269,14 @@ public void ajouter() {
 }
 
 public void modifierCollecte() {
-	if(!txtLieu.getText().equals("") & txtLieu.getText() != null ){
-		String strCle = txtLieu.getText();
+	if(!((String)cmbLieu.getSelectedItem()).equals("") & ((String)cmbLieu.getSelectedItem()) != null ){
+		String strCle = (String)cmbLieu.getSelectedItem();
 		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer les modifications portées sur :\n"+ strCle ,"MODIFICATION", JOptionPane.YES_NO_OPTION);
-		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("NOM", strCle).get(0);
+		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", strCle).get(0);
 
 		if(rep==JOptionPane.YES_OPTION){
 		
-			Collecte collecteNew = new Collecte(collecte.getId(),Integer.parseInt(txtLieu.getText()),txtType.getText(),txtDateCollecte.getText(),txtOrganisateur.getText());
+			Collecte collecteNew = new Collecte(collecte.getId(),Integer.parseInt(strCle),txtType.getText(),txtDateCollecte.getText(),txtOrganisateur.getText());
 	
 			ctrCollecte.CtrCollecte_Modifier(collecteNew);
 	
@@ -289,7 +296,7 @@ public void modifierCollecte() {
 	}
 	public void remplirChamps(String nom) {
 		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", nom).get(0);
-		txtLieu.setText(String.valueOf(collecte.getLieu()));
+		cmbLieu.setSelectedItem(String.valueOf(collecte.getLieu()));
 		txtType.setText(collecte.getTypeCollecte());
 		txtDateCollecte.setText(collecte.getDateCollecte());
 		txtOrganisateur.setText(collecte.getOrganisateur());

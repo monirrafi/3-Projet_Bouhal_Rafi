@@ -12,7 +12,7 @@ public final class Application {
 /*          Acceuil acceuil = new Acceuil();
         acceuil.action();
         acceuil.setVisible(true);
-    VueDonneur donneur = new VueDonneur();
+        VueDonneur donneur = new VueDonneur();
         donneur.action();
         donneur.setVisible(true);
 
@@ -24,10 +24,9 @@ public final class Application {
         VueCollecte vueCollecte = new VueCollecte();
         vueCollecte.action();
         vueCollecte.setVisible(true);*/
-        Acceuil acceuil = new Acceuil();
-        acceuil.action();
-        acceuil.setVisible(true);
-     
+        VueCollecte vueCollecte = new VueCollecte();
+        vueCollecte.action();
+        vueCollecte.setVisible(true);     
 
 }
 }
