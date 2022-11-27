@@ -1,29 +1,18 @@
 package Projet_Collecte_Sang.dao_Donnneur.vueDonneur;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Projet_Collecte_Sang.actionEvent;
 import Projet_Collecte_Sang.dao_Donnneur.controleurDonneur.ControleurDonneur;
 import Projet_Collecte_Sang.dao_Donnneur.modelDonneur.Donneur;
 
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class VueDonneur extends JFrame implements actionEvent{
 	private ControleurDonneur ctrDonneur = ControleurDonneur.getControleurDonneur();
@@ -48,7 +37,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 	public VueDonneur() {
 		action();
 		setBackground(new Color(240, 240, 240));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 935, 431);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 128, 255));
@@ -196,25 +185,25 @@ public class VueDonneur extends JFrame implements actionEvent{
 		contentPane.add(panelBouton);
 		panelBouton.setLayout(null);
 		
-		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter = new JButton("Ajouter");
 		btnAjouter.setBackground(new Color(255, 128, 0));
 		btnAjouter.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnAjouter.setBounds(132, 5, 85, 35);
 		panelBouton.add(btnAjouter);
 		
-		JButton btnModifier = new JButton("Modifier");
+		btnModifier = new JButton("Modifier");
 		btnModifier.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnModifier.setBackground(new Color(255, 128, 0));
 		btnModifier.setBounds(238, 5, 102, 35);
 		panelBouton.add(btnModifier);
 		
-		JButton btnSuprimer = new JButton("Suprimer");
+		btnSuprimer = new JButton("Suprimer");
 		btnSuprimer.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnSuprimer.setBackground(new Color(255, 128, 0));
 		btnSuprimer.setBounds(10, 5, 95, 35);
 		panelBouton.add(btnSuprimer);
 		
-		JButton btnLister = new JButton("Afficher tout");
+		btnLister = new JButton("Afficher tout");
 		btnLister.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnLister.setBackground(new Color(255, 128, 64));
 		btnLister.setBounds(757, 25, 158, 35);
@@ -230,39 +219,6 @@ public class VueDonneur extends JFrame implements actionEvent{
 		cmbNom = new JComboBox<>(getListeCBox("id"));
 		cmbNom.setBounds(588, 31, 159, 21);
 		contentPane.add(cmbNom);
-	}
-
-/*============================================================================================================= */
-/*										Ecouetuers																*/
-/*============================================================================================================= */
-
-	public void actionBtn(ActionEvent ev){
-		if(ev.getSource()== btnLister){
-			table.setModel(remplirTable("",""));
-			viderChamps();
-
-		}else if(ev.getSource()== btnModifier){
-			modifierDonneur();
-
-		}else if(ev.getSource()== btnSuprimer){
-			Suprimer();
-
-		}else if(ev.getSource()== btnAjouter){
-			//String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du Donneur a ajouter");
-			ajouter();
-
-		}
-	}
-
-	public void itemStateChanged(ItemEvent e) {
-		if(e.getSource()== cmbNom){
-			String nom = (String)cmbNom.getSelectedItem();
-			nom = nom.split("_")[0];
-			DefaultTableModel model = remplirTable("NOM",nom);
-			table.setModel(model);
-			remplirChamps(nom);
-			
-		}
 	}
 
 	
@@ -412,7 +368,38 @@ public void modifierDonneur() {
 		
 
 	}
+	/*============================================================================================================= */
+/*										Ecouetuers																*/
+/*============================================================================================================= */
 
+	public void actionBtn(ActionEvent ev){
+		if(ev.getSource()== btnLister){
+			table.setModel(remplirTable("",""));
+			viderChamps();
+
+		}else if(ev.getSource()== btnModifier){
+			modifierDonneur();
+
+		}else if(ev.getSource()== btnSuprimer){
+			Suprimer();
+
+		}else if(ev.getSource()== btnAjouter){
+			//String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du Donneur a ajouter");
+			ajouter();
+
+		}
+	}
+
+	public void itemStateChanged(ItemEvent e) {
+		if(e.getSource()== cmbNom){
+			String nom = (String)cmbNom.getSelectedItem();
+			nom = nom.split("_")[0];
+			DefaultTableModel model = remplirTable("NOM",nom);
+			table.setModel(model);
+			remplirChamps(nom);
+			
+		}
+	}
 	@Override
 	public void action() {
 		cmbNom.addItemListener(this::itemStateChanged);
@@ -421,5 +408,8 @@ public void modifierDonneur() {
 		btnModifier.addActionListener(this::actionBtn);
 		btnSuprimer.addActionListener(this::actionBtn);
 		
-	}	
+	}
+
+
+
 }
