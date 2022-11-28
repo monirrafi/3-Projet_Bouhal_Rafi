@@ -417,4 +417,10 @@ public void modifierUtilisateur() {
 		btnSuprimer.addActionListener(this::actionBtn);
 		
 	}	
+	
+	public ControleurUtilisateur getControleur() {
+		return ctrUtilisateur;
+		
+	}
+
 }

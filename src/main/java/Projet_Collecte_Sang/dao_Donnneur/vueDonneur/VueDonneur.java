@@ -410,6 +410,9 @@ public void modifierDonneur() {
 		
 	}
 
-
+	public ControleurDonneur getControleur() {
+		return ctrDonneur;
+		
+	}
 
 }
