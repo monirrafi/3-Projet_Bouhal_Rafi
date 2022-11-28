@@ -20,9 +20,9 @@ import Projet_Collecte_Sang.dao_Utilisateur.vueUtilisateur.FormulaireUser;
 public class Acceuil extends JFrame implements actionEvent{
 //	private ControleurUtilisateur  ctrUtilisateur = ControleurUtilisateur.getControleurUtilisateur();
 	
-	private VueDonneur vueDonneur;
+	private VueDonneur vueDonneur=new VueDonneur();
 	private FormulaireUser vueUtilisateur= new FormulaireUser();
-	private VueCollecte vueCollecte;
+	private VueCollecte vueCollecte=new VueCollecte();
 
 	private JPanel contentPane;
 	private JPanel paneNiveau2;
