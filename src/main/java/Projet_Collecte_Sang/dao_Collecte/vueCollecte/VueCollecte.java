@@ -341,7 +341,9 @@ public void modifierCollecte() {
 		btnSuprimer.addActionListener(this::actionBtn);
 		
 	}
-
+	public ControleurCollecte getControleur(){
+		return ctrCollecte;
+	}
 
 
 }
