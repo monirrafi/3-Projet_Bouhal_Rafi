@@ -24,8 +24,8 @@ public class DaoDonneur implements IDonneur {
     private static final String GET_ALL = "SELECT * FROM donneur ORDER BY ID_DONNEUR";
     private static final String GET_BY_ID = "SELECT * FROM donneur WHERE ID_DONNEUR=?";
     private static final String GET_BY_CHAMPS = "SELECT * FROM donneur WHERE ";
-    private static final String ENREGISTRER = "INSERT INTO donneur VALUES(0,?,?,?, ?,?,?, ?,?,?)";
-    private static final String MODIFIER = "UPDATE donneur SET NOM=?,PRENOM=?,DATE_NAISSANCE=?,TEL=?,EMAIL=?,ADRESSE=?,POIDS=?,GROUPAGE=?,SEXE=? WHERE ID_DONNEUR=?";
+    private static final String ENREGISTRER = "INSERT INTO donneur VALUES(0,?,?,?,?,?,?,?,?,?,?)";
+    private static final String MODIFIER = "UPDATE donneur SET NUM_ASS_MAL=?,NOM=?,PRENOM=?,DATE_NAISSANCE=?,TEL=?,EMAIL=?,ADRESSE=?,POIDS=?,GROUPAGE=?,SEXE=? WHERE ID_DONNEUR=?";
 
     // Singleton de connexion à la BD
     // getConnexion() est devenu une zonne critique. 
@@ -78,15 +78,16 @@ public class DaoDonneur implements IDonneur {
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(ENREGISTRER, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, donneur.getNom());
-            stmt.setString(2, donneur.getPrenom());
-            stmt.setString(3, donneur.getDateNaissance());
-            stmt.setString(4, donneur.getTelphone());
-            stmt.setString(5, donneur.getEmail());
-            stmt.setString(6, donneur.getAddresse());
-            stmt.setDouble(7, donneur.getPoids());
-            stmt.setString(8, donneur.getGroupage());
-            stmt.setString(9, donneur.getSexe());
+            stmt.setString(1, donneur.getNoRamq());
+            stmt.setString(2, donneur.getNom());
+            stmt.setString(3, donneur.getPrenom());
+            stmt.setString(4, donneur.getDateNaissance());
+            stmt.setString(5, donneur.getTelphone());
+            stmt.setString(6, donneur.getEmail());
+            stmt.setString(7, donneur.getAddresse());
+            stmt.setDouble(8, donneur.getPoids());
+            stmt.setString(9, donneur.getGroupage());
+            stmt.setString(10, donneur.getSexe());
            
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
@@ -115,15 +116,16 @@ public class DaoDonneur implements IDonneur {
                 while (rs.next()) {
                     Donneur donneur = new Donneur();
                     donneur.setId(rs.getInt(1));
-                    donneur.setNom(rs.getString(2));
-                    donneur.setPrenom(rs.getString(3));
-                    donneur.setDateNaissance(rs.getString(4));
-                    donneur.setTelphone(rs.getString(5));
-                    donneur.setEmail(rs.getString(6));
-                    donneur.setAddresse(rs.getString(7));
-                    donneur.setPoids(rs.getDouble(8));
-                    donneur.setGroupage(rs.getString(9));
-                    donneur.setSexe(rs.getString(10));
+                    donneur.setNoRamq(rs.getString(2));
+                    donneur.setNom(rs.getString(3));
+                    donneur.setPrenom(rs.getString(4));
+                    donneur.setDateNaissance(rs.getString(5));
+                    donneur.setTelphone(rs.getString(6));
+                    donneur.setEmail(rs.getString(7));
+                    donneur.setAddresse(rs.getString(8));
+                    donneur.setPoids(rs.getDouble(9));
+                    donneur.setGroupage(rs.getString(10));
+                    donneur.setSexe(rs.getString(11));
                     listeDonneurs.add(donneur);
                 }
             } catch (SQLException e) {
@@ -152,15 +154,16 @@ public class DaoDonneur implements IDonneur {
             if (rs.next()) {
                 Donneur donneur = new Donneur();
                 donneur.setId(rs.getInt(1));
-                donneur.setNom(rs.getString(2));
-                donneur.setPrenom(rs.getString(3));
-                donneur.setDateNaissance(rs.getString(4));
-                donneur.setTelphone(rs.getString(5));
-                donneur.setEmail(rs.getString(6));
-                donneur.setAddresse(rs.getString(7));
-                donneur.setPoids(rs.getDouble(8));
-                donneur.setGroupage(rs.getString(9));
-                donneur.setSexe(rs.getString(10));
+                donneur.setNoRamq(rs.getString(2));
+                donneur.setNom(rs.getString(3));
+                donneur.setPrenom(rs.getString(4));
+                donneur.setDateNaissance(rs.getString(5));
+                donneur.setTelphone(rs.getString(6));
+                donneur.setEmail(rs.getString(7));
+                donneur.setAddresse(rs.getString(8));
+                donneur.setPoids(rs.getDouble(9));
+                donneur.setGroupage(rs.getString(10));
+                donneur.setSexe(rs.getString(11));
 
                 return donneur;
             } else {
@@ -189,16 +192,17 @@ public class DaoDonneur implements IDonneur {
             while (rs.next()) {
                 Donneur donneur = new Donneur();
                 donneur.setId(rs.getInt(1));
-                donneur.setNom(rs.getString(2));
-                donneur.setPrenom(rs.getString(3));
-                donneur.setDateNaissance(rs.getString(4));
-                donneur.setTelphone(rs.getString(5));
-                donneur.setEmail(rs.getString(6));
-                donneur.setAddresse(rs.getString(7));
-                donneur.setPoids(rs.getDouble(8));
-                donneur.setGroupage(rs.getString(9));
-                donneur.setSexe(rs.getString(10));
-                listeDonneurs.add(donneur);
+                donneur.setNoRamq(rs.getString(2));
+                donneur.setNom(rs.getString(3));
+                donneur.setPrenom(rs.getString(4));
+                donneur.setDateNaissance(rs.getString(5));
+                donneur.setTelphone(rs.getString(6));
+                donneur.setEmail(rs.getString(7));
+                donneur.setAddresse(rs.getString(8));
+                donneur.setPoids(rs.getDouble(9));
+                donneur.setGroupage(rs.getString(10));
+                donneur.setSexe(rs.getString(11));
+            listeDonneurs.add(donneur);
             }
         } catch (SQLException e) {
             // e.printStackTrace();
@@ -217,16 +221,18 @@ public class DaoDonneur implements IDonneur {
        
         try {
             stmt = conn.prepareStatement(MODIFIER);
-            stmt.setString(1, donneur.getNom());
-            stmt.setString(2, donneur.getPrenom());
-            stmt.setString(3, donneur.getDateNaissance());
-            stmt.setString(4, donneur.getTelphone());
-            stmt.setString(5, donneur.getEmail());
-            stmt.setString(6, donneur.getAddresse());
-            stmt.setDouble(7, donneur.getPoids());
-            stmt.setString(8, donneur.getGroupage());
-            stmt.setString(9, donneur.getSexe());
-            stmt.setInt(10, donneur.getId());
+            stmt.setString(1, donneur.getNoRamq());
+            stmt.setString(2, donneur.getNom());
+            stmt.setString(3, donneur.getPrenom());
+            stmt.setString(4, donneur.getDateNaissance());
+            stmt.setString(5, donneur.getTelphone());
+            stmt.setString(6, donneur.getEmail());
+            stmt.setString(7, donneur.getAddresse());
+            stmt.setDouble(8, donneur.getPoids());
+            stmt.setString(9, donneur.getGroupage());
+            stmt.setString(10, donneur.getSexe());
+            stmt.setInt(11, donneur.getId());
+
             return stmt.executeUpdate();
         } catch (SQLException e) {
             // e.printStackTrace();

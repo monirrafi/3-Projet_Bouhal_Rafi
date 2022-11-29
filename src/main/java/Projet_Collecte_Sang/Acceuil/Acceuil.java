@@ -29,7 +29,7 @@ public class Acceuil extends JFrame implements actionEvent{
 	private JTable tableNiveau2; 
 	static int niveau=0;
 	static String objNiveau2 ="donneur";
-	static String champsNiveau2 = "Nom";
+	static String champsNiveau2 = "NUM_ASS_MAL";
 
 
 	private JComboBox<String> cmbNomNiveau2 = new JComboBox<>();
@@ -291,7 +291,7 @@ public class Acceuil extends JFrame implements actionEvent{
 				{null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"
+				"Numero RAMQ","Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"
 			}
 		));
 
@@ -313,10 +313,10 @@ public DefaultTableModel remplirTable(String champs,String valeur,String obj) {
 		}else{
 			listeDonneurs = (ArrayList<Donneur>) vueDonneur.getControleur().CtrDonneur_GetByChamps(champs, valeur);
 		}
-		String[] column = {"Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"};
+		String[] column = {"Numero RAMQ","Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"};
 		model = new DefaultTableModel(column,0);
 		for(Donneur donneur:listeDonneurs){
-				model.addRow(new Object[]{donneur.getNom(),donneur.getPrenom(),donneur.getDateNaissance(),donneur.getTelphone(),donneur.getEmail(),donneur.getAddresse(),donneur.getPoids(),donneur.getGroupage(),donneur.getSexe()});				
+				model.addRow(new Object[]{donneur.getNoRamq(), donneur.getNom(),donneur.getPrenom(),donneur.getDateNaissance(),donneur.getTelphone(),donneur.getEmail(),donneur.getAddresse(),donneur.getPoids(),donneur.getGroupage(),donneur.getSexe()});				
 			}
 	}else if(obj.equals("collecte")){
 		ArrayList<Collecte> listeCollectes = new ArrayList<>();
@@ -342,7 +342,7 @@ public  String[] getListeCBox(String obj){
 
 		if(obj.equals("donneur")) {
 			for(Donneur donneur:vueDonneur.getControleur().CtrDonneur_GetAll()){		
-							listeTmp.add(String.valueOf(donneur.getNom()));
+							listeTmp.add(String.valueOf(donneur.getNoRamq()));
 			}
 				
 		}else if(obj.equals("collecte")) {
@@ -413,7 +413,7 @@ public void actionBtn(ActionEvent ev){
 
 	}else if(ev.getSource()== btnDonneurNiveau2){
 		objNiveau2="donneur";
-		champsNiveau2="Nom";
+		champsNiveau2="NUM_ASS_MAL";
 		lblTitreNiveau2.setText("les informations des donneurs");
 		tableNiveau2.setModel(remplirTable("","", objNiveau2));
 		DefaultComboBoxModel<String> modelCmb = new DefaultComboBoxModel<>(getListeCBox("donneur"));
