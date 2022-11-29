@@ -1,6 +1,7 @@
 package Projet_Collecte_Sang.dao_Donnneur.modelDonneur;
 public class Donneur {
     private int id;
+    private String noRamq;
     private String  nom ="";
     private String  prenom ="";
     private String  dateNaissance ="";
@@ -16,9 +17,10 @@ public class Donneur {
     }
 
     
-    public Donneur(int id, String nom, String prenom, String dateNaissance, String telphone, String email,
+    public Donneur(int id, String noRamq, String nom, String prenom, String dateNaissance, String telphone, String email,
             String addresse, double poids, String groupage, String sexe) {
                 this.setId(id);
+                this.setNoRamq(noRamq);
                 this.setNom(nom);
                 this.setPrenom(prenom);
                 this.setDateNaissance(dateNaissance);
@@ -30,8 +32,9 @@ public class Donneur {
                 this.setSexe(sexe);
             }
 
-            public Donneur(String nom, String prenom, String dateNaissance, String telphone, String email,
+            public Donneur(String noRamq, String nom, String prenom, String dateNaissance, String telphone, String email,
             String addresse, double poids, String groupage, String sexe) {
+                this.setNoRamq(noRamq);
                 this.setNom(nom);
                 this.setPrenom(prenom);
                 this.setDateNaissance(dateNaissance);
@@ -105,6 +108,16 @@ public class Donneur {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public String getNoRamq() {
+        return noRamq;
+    }
+
+
+    public void setNoRamq(String noRamq) {
+        this.noRamq = noRamq;
     }
 
     

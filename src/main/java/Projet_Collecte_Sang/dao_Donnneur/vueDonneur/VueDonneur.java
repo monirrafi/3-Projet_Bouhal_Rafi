@@ -17,6 +17,8 @@ import java.util.*;
 public class VueDonneur extends JFrame implements actionEvent{
 	private ControleurDonneur ctrDonneur = ControleurDonneur.getControleurDonneur();
 	private JPanel contentPane;
+	
+	private JTextField txtNoRamq;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtTel;
@@ -56,30 +58,41 @@ public class VueDonneur extends JFrame implements actionEvent{
 		JPanel paneChamps = new JPanel();
 		paneChamps.setBackground(new Color(0, 128, 255));
 		paneChamps.setBorder(new LineBorder(new Color(0, 0, 0)));
-		paneChamps.setBounds(10, 70, 350, 295);
+		paneChamps.setBounds(10, 70, 350, 300);
 		contentPane.add(paneChamps);
 		paneChamps.setLayout(null);
+				
+		JLabel lblNoRamq = new JLabel("Numero RAMQ");
+		lblNoRamq.setBounds(20, 5, 117, 19);
+		lblNoRamq.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		paneChamps.add(lblNoRamq);
+		
+		txtNoRamq = new JTextField();
+		txtNoRamq.setBounds(140, 5, 198, 19);
+		lblNoRamq.setLabelFor(txtNoRamq);
+		paneChamps.add(txtNoRamq);
+		txtNoRamq.setColumns(10);
 		
 		JLabel lblNom = new JLabel("Nom");
-		lblNom.setBounds(20, 7, 117, 19);
+		lblNom.setBounds(20, 35, 117, 19);
 		lblNom.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		paneChamps.add(lblNom);
 		
 		txtNom = new JTextField();
-		txtNom.setBounds(142, 5, 198, 19);
+		txtNom.setBounds(140, 35, 198, 19);
 		lblNom.setLabelFor(txtNom);
 		paneChamps.add(txtNom);
 		txtNom.setColumns(10);
-		
+
 		JLabel lblPrenom = new JLabel("Prenom");
 		lblPrenom.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblPrenom.setBounds(20, 35, 117, 19);
+		lblPrenom.setBounds(20, 65, 117, 19);
 		paneChamps.add(lblPrenom);
 		
 		txtPrenom = new JTextField();
 		lblPrenom.setLabelFor(txtPrenom);
 		txtPrenom.setColumns(10);
-		txtPrenom.setBounds(142, 33, 198, 19);
+		txtPrenom.setBounds(140, 65, 198, 19);
 		paneChamps.add(txtPrenom);
 		
 		JLabel lblTel = new JLabel("Telephone");
@@ -90,72 +103,74 @@ public class VueDonneur extends JFrame implements actionEvent{
 		txtTel = new JTextField();
 		lblTel.setLabelFor(txtTel);
 		txtTel.setColumns(10);
-		txtTel.setBounds(142, 93, 198, 19);
+		txtTel.setBounds(140, 95, 198, 19);
 		paneChamps.add(txtTel);
 		
 		JLabel lblEmail = new JLabel("Courriel");
 		lblEmail.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblEmail.setBounds(20, 128, 117, 19);
+		lblEmail.setBounds(20, 125, 117, 19);
 		paneChamps.add(lblEmail);
 		
 		txtEmail = new JTextField();
 		lblEmail.setLabelFor(txtEmail);
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(142, 126, 198, 19);
+		txtEmail.setBounds(140, 125, 198, 19);
 		paneChamps.add(txtEmail);
 		
 		JLabel lblAdresse = new JLabel("Adresse");
 		lblAdresse.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblAdresse.setBounds(20, 159, 117, 19);
+		lblAdresse.setBounds(20, 155, 117, 19);
 		paneChamps.add(lblAdresse);
 		
 		txtAdresse = new JTextField();
 		lblAdresse.setLabelFor(txtAdresse);
 		txtAdresse.setColumns(10);
-		txtAdresse.setBounds(142, 157, 198, 19);
+		txtAdresse.setBounds(140, 155, 198, 19);
 		paneChamps.add(txtAdresse);
-		
-		txtPoids = new JTextField();
-		txtPoids.setColumns(10);
-		txtPoids.setBounds(142, 188, 198, 19);
-		paneChamps.add(txtPoids);
 		
 		JLabel lblPoids = new JLabel("Poids");
 		lblPoids.setLabelFor(txtPoids);
 		lblPoids.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblPoids.setBounds(20, 190, 117, 19);
+		lblPoids.setBounds(20, 185, 117, 19);
 		paneChamps.add(lblPoids);
+
+		txtPoids = new JTextField();
+		txtPoids.setColumns(10);
+		txtPoids.setBounds(140, 185, 198, 19);
+		paneChamps.add(txtPoids);
+		
 		
 		JLabel lblGroupage = new JLabel("Groupe Sanguin");
 		lblGroupage.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblGroupage.setBounds(20, 219, 117, 19);
+		lblGroupage.setBounds(20, 215, 117, 19);
 		paneChamps.add(lblGroupage);
 		
 		txtGroupage = new JTextField();
 		lblGroupage.setLabelFor(txtGroupage);
 		txtGroupage.setColumns(10);
-		txtGroupage.setBounds(142, 217, 198, 19);
+		txtGroupage.setBounds(140, 215, 198, 19);
 		paneChamps.add(txtGroupage);
 		
 		JLabel lblSexe = new JLabel("Sexe");
 		lblSexe.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblSexe.setBounds(20, 250, 117, 19);
+		lblSexe.setBounds(20, 245, 117, 19);
 		paneChamps.add(lblSexe);
 		
+		cmbSexe = new JComboBox<>();
+		cmbSexe.setModel(new DefaultComboBoxModel<>(new String[] {"M", "F"}));
+		cmbSexe.setBounds(140, 245, 198, 21);
+		paneChamps.add(cmbSexe);
+
 		JLabel lblDateNaissance = new JLabel("Date Naissance");
 		lblDateNaissance.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblDateNaissance.setBounds(20, 64, 117, 19);
+		lblDateNaissance.setBounds(20, 275, 117, 19);
 		paneChamps.add(lblDateNaissance);
 		
 		txtDateNaissance = new JTextField();
 		txtDateNaissance.setColumns(10);
-		txtDateNaissance.setBounds(142, 62, 198, 19);
+		txtDateNaissance.setBounds(140, 275, 198, 19);
 		paneChamps.add(txtDateNaissance);
 		
-		cmbSexe = new JComboBox<>();
-		cmbSexe.setModel(new DefaultComboBoxModel<>(new String[] {"Male", "Femelle"}));
-		cmbSexe.setBounds(142, 246, 198, 21);
-		paneChamps.add(cmbSexe);
 		
 		JPanel paneTable = new JPanel();
 		paneTable.setBackground(new Color(0, 128, 255));
@@ -171,10 +186,10 @@ public class VueDonneur extends JFrame implements actionEvent{
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null, null},
+				{null,null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"
+				"Numero RAMQ","Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"
 			}
 		));
 		table.getColumnModel().getColumn(2).setPreferredWidth(90);
@@ -226,6 +241,7 @@ public class VueDonneur extends JFrame implements actionEvent{
 /*										Fonctions																*/
 /*=============================================================================================================*/
 public void viderChamps() {
+	txtNoRamq.setText("");
 	txtNom.setText("");
 	txtPrenom.setText("");
 	txtTel.setText("");
@@ -248,12 +264,12 @@ public DefaultTableModel remplirTable(String champs,String valeur) {
 		listeDonneurs = (ArrayList<Donneur>) ctrDonneur.CtrDonneur_GetByChamps(champs, valeur);
 
 	}
-	String[] column = {"Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"};
+	String[] column = {"Numero RAMQ","Nom", "Prenom", "Date Naissance", "Telephone", "courriel", "Adresse", "Poids", "Groupe Sanguin", "Sexe"};
 	DefaultTableModel model = new DefaultTableModel(column,0);
 	
 	
 	for(Donneur donneur:listeDonneurs){
-			model.addRow(new Object[]{donneur.getNom(),donneur.getPrenom(),donneur.getDateNaissance(),donneur.getTelphone(),donneur.getEmail(),donneur.getAddresse(),donneur.getPoids(),donneur.getGroupage(),donneur.getSexe()});				
+			model.addRow(new Object[]{donneur.getNoRamq(), donneur.getNom(),donneur.getPrenom(),donneur.getDateNaissance(),donneur.getTelphone(),donneur.getEmail(),donneur.getAddresse(),donneur.getPoids(),donneur.getGroupage(),donneur.getSexe()});				
 		}
 	return model;
 
@@ -265,7 +281,7 @@ public  String[] getListeCBox(String choix){
 		ArrayList<String>  listeTmp = new ArrayList<String>();
 		for(Donneur donneur:ctrDonneur.CtrDonneur_GetAll()){		
 					if(choix.equals("id")) {
-						listeTmp.add(String.valueOf(donneur.getNom() + "_" + donneur.getPrenom()));
+						listeTmp.add(String.valueOf(donneur.getNoRamq()));
 					}
 		}
 		retour = new String[listeTmp.size()];
@@ -280,38 +296,35 @@ public  String[] getListeCBox(String choix){
 /*										S-A-R     															    */
 /*=============================================================================================================*/
 public void Suprimer() {
-	if(!txtNom.getText().equals("") & txtNom.getText() != null ){
-		String strCle = txtNom.getText();
+	if(!txtNoRamq.getText().equals("") & txtNoRamq.getText() != null ){
+		String strCle = txtNoRamq.getText();
 		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous suprimer:\n"+ strCle ,"SOUPRESSION", JOptionPane.YES_NO_OPTION);
 		if(rep==0){
-		int cle = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0).getId();
+		int cle = ctrDonneur.CtrDonneur_GetByChamps("NUM_ASS_MAL", strCle).get(0).getId();
 		ctrDonneur.CtrDonneur_Enlever(cle);
 
 		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
 		cmbNom.removeAll();
 		cmbNom.setModel(modelNum);
-
-		//sauvgarder();
-		//JOptionPane.showMessageDialog(null,"le Donneur "+ strCle + " est suprimer avec succès");
 		}	
 	}else{
-		JOptionPane.showMessageDialog(null,"Choisissez d'abord le nom!?");
+		JOptionPane.showMessageDialog(null,"Choisissez d'abord le Numero RAMQ!?");
 	}
 	DefaultTableModel modelTable = remplirTable("","");
 	table.setModel(modelTable);
 	viderChamps();
 }
 public void ajouter() {
-	if(!txtNom.getText().equals("") & txtNom.getText() != null ){
-		String strCle = txtNom.getText();
-		if(ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).size() != 0){
+	if(!txtNoRamq.getText().equals("") & txtNoRamq.getText() != null ){
+		String strCle = txtNoRamq.getText();
+		if(ctrDonneur.CtrDonneur_GetByChamps("NUM_ASS_MAL", strCle).size() != 0){
 				int rep = JOptionPane.showConfirmDialog(null, "le donneur "+ strCle +"  existe déjà!!\n Voulez-vous le modifier?","AJOUT", JOptionPane.YES_NO_OPTION);
 				if(rep==0){
 					modifierDonneur();
 				}			
 		}else{
 
-		Donneur donneur = new Donneur(txtNom.getText(),txtPrenom.getText(),txtDateNaissance.getText(),txtTel.getText(),txtEmail.getText(),txtAdresse.getText(),Double.parseDouble(txtPoids.getText()),txtGroupage.getText(),(String)cmbSexe.getSelectedItem());
+		Donneur donneur = new Donneur(txtNoRamq.getText(), txtNom.getText(),txtPrenom.getText(),txtDateNaissance.getText(),txtTel.getText(),txtEmail.getText(),txtAdresse.getText(),Double.parseDouble(txtPoids.getText()),txtGroupage.getText(),(String)cmbSexe.getSelectedItem());
 		ctrDonneur.CtrDonneur_Enregistrer(donneur);
 
 				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
@@ -329,14 +342,14 @@ public void ajouter() {
 }
 
 public void modifierDonneur() {
-	if(!txtNom.getText().equals("") & txtNom.getText() != null ){
-		String strCle = txtNom.getText();
+	if(!txtNoRamq.getText().equals("") & txtNoRamq.getText() != null ){
+		String strCle = txtNoRamq.getText();
 		int rep = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer les modifications portées sur :\n"+ strCle ,"MODIFICATION", JOptionPane.YES_NO_OPTION);
-		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NOM", strCle).get(0);
+		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NUM_ASS_MAL", (String)cmbNom.getSelectedItem()).get(0);
 
 		if(rep==JOptionPane.YES_OPTION){
 		
-			Donneur donneurNew = new Donneur(donneur.getId(),txtNom.getText(),txtPrenom.getText(),txtDateNaissance.getText(),txtTel.getText(),txtEmail.getText(),txtAdresse.getText(),Double.parseDouble(txtPoids.getText()),txtGroupage.getText(),(String)cmbSexe.getSelectedItem());
+			Donneur donneurNew = new Donneur(donneur.getId(),txtNoRamq.getText(), txtNom.getText(),txtPrenom.getText(),txtDateNaissance.getText(),txtTel.getText(),txtEmail.getText(),txtAdresse.getText(),Double.parseDouble(txtPoids.getText()),txtGroupage.getText(),(String)cmbSexe.getSelectedItem());
 	
 			ctrDonneur.CtrDonneur_Modifier(donneurNew);
 	
@@ -345,7 +358,7 @@ public void modifierDonneur() {
 			cmbNom.setModel(modelNum);
 		}	
 	}else{
-		JOptionPane.showMessageDialog(null,"Choisissez d'abord le nom!?");
+		JOptionPane.showMessageDialog(null,"Choisissez d'abord le Numero RAMQ!?");
 	}
 	DefaultTableModel modelTable = remplirTable("","");
 	table.setModel(modelTable);
@@ -355,7 +368,8 @@ public void modifierDonneur() {
 
 	}
 	public void remplirChamps(String nom) {
-		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NOM", nom).get(0);
+		Donneur donneur = ctrDonneur.CtrDonneur_GetByChamps("NUM_ASS_MAL", nom).get(0);
+		txtNoRamq.setText(donneur.getNoRamq());
 		txtNom.setText(donneur.getNom());
 		txtPrenom.setText(donneur.getPrenom());
 		txtDateNaissance.setText(donneur.getDateNaissance());
@@ -393,8 +407,7 @@ public void modifierDonneur() {
 	public void itemStateChanged(ItemEvent e) {
 		if(e.getSource()== cmbNom){
 			String nom = (String)cmbNom.getSelectedItem();
-			nom = nom.split("_")[0];
-			DefaultTableModel model = remplirTable("NOM",nom);
+			DefaultTableModel model = remplirTable("NUM_ASS_MAL",nom);
 			table.setModel(model);
 			remplirChamps(nom);
 			
