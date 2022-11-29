@@ -23,6 +23,7 @@ public class Acceuil extends JFrame implements actionEvent{
 	private VueDonneur vueDonneur=new VueDonneur();
 	private FormulaireUser vueUtilisateur= new FormulaireUser();
 	private VueCollecte vueCollecte=new VueCollecte();
+	//private VueLieuCollecte vueLieuCollecte = new VueLieuCollecte();
 
 	private JPanel contentPane;
 	private JPanel paneNiveau2;
@@ -366,30 +367,30 @@ public  String[] getListeCBox(String obj){
 
 public void actionBtn(ActionEvent ev){
 	if(ev.getSource()== btnCollecte){
-		vueCollecte = new VueCollecte();
+		//vueCollecte = new VueCollecte();
 		vueCollecte.action();
 		vueCollecte.setVisible(true);
 
 	}else if(ev.getSource()== btnDon){
 
 	}else if(ev.getSource()== btnDonneur){
-		vueDonneur = new VueDonneur();
+		//vueDonneur = new VueDonneur();
 		vueDonneur.action();
 		vueDonneur.setVisible(true);
 
 	}else if(ev.getSource()== btnLieu){
+		//vueLieuCollecte.action();
+		//vueLieuCollecte.setVisible(true);
 
 	}else if(ev.getSource()== btnUtilisateur){
-		vueUtilisateur = new FormulaireUser();
+		//vueUtilisateur = new FormulaireUser();
 		vueUtilisateur.action();
 		vueUtilisateur.setVisible(true);
 
 	}else if(ev.getSource()== btnRDV){
 
 	}else if(ev.getSource()== btnConnecte){
-		if(niveau == 0){
-			niveau = connexionForm();
-		}
+		niveau = connexionForm();
 		libirerBoutton(niveau);
 
 	}else if(ev.getSource()== btnRetour){
