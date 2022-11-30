@@ -342,7 +342,8 @@ public void modifierCollecte() {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					String lieuChoisi =  model.getValueAt( table.getSelectedRow(),table.getSelectedColumn()).toString();
-					remplirChamps(lieuChoisi);
+					Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", lieuChoisi).get(0);
+					remplirChamps(String.valueOf(collecte.getId()));
 					//System.out.println(lieuChoisi);
 					
 				}
