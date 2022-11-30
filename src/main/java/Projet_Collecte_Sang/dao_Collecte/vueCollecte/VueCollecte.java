@@ -5,18 +5,22 @@ import java.awt.event.ItemEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import Projet_Collecte_Sang.actionEvent;
 import Projet_Collecte_Sang.dao_Collecte.controleurCollecte.ControleurCollecte;
 import Projet_Collecte_Sang.dao_Collecte.modelCollecte.Collecte;
+import Projet_Collecte_Sang.dao_LieuCollecte.controleurLieuCollecte.ControleurLieuCollecte;
+import Projet_Collecte_Sang.dao_LieuCollecte.modelLieuCollecte.LieuCollecte;
 
 import java.util.*;
 
 public class VueCollecte extends JFrame implements actionEvent{
 	private ControleurCollecte ctrCollecte = ControleurCollecte.getControleurCollecte();
+	private ControleurLieuCollecte controleurLieuCollecte = ControleurLieuCollecte.getControleurLieuCollecte();
 	private JPanel contentPane;
-	private JTextField txtLieu;
 	private JTextField txtType;
 	private JTextField txtDateCollecte;
 	private JTextField txtOrganisateur;
@@ -58,8 +62,14 @@ public class VueCollecte extends JFrame implements actionEvent{
 		lblLieu.setBounds(20, 7, 117, 19);
 		lblLieu.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		paneChamps.add(lblLieu);
-		String[] valeurs = {"1","2","3"};
-		cmbLieu = new JComboBox<>(valeurs);
+
+		ArrayList<LieuCollecte> listelieux = (ArrayList<LieuCollecte>) controleurLieuCollecte.CtrLieuCollecte_GetAll();
+		String[] lieuxString = new String[listelieux.size()];
+		for(int i=0;i<listelieux.size();i++){
+			lieuxString[i]=String.valueOf(listelieux.get(i).getNom());
+		}
+		
+		cmbLieu = new JComboBox<>(lieuxString);
 		cmbLieu.setBounds(142, 5, 198, 19);
 		lblLieu.setLabelFor(cmbLieu);
 		paneChamps.add(cmbLieu);
@@ -165,7 +175,7 @@ public class VueCollecte extends JFrame implements actionEvent{
 		lblCollecte.setBounds(382, 25, 196, 28);
 		contentPane.add(lblCollecte);
 		
-		cmbNom = new JComboBox<>(getListeCBox("id"));
+		cmbNom = new JComboBox<>(getListeCBox());
 		cmbNom.setBounds(588, 31, 159, 21);
 		contentPane.add(cmbNom);
 	}
@@ -202,14 +212,14 @@ public DefaultTableModel remplirTable(String champs,String valeur) {
 
 }
 
-public  String[] getListeCBox(String choix){
-
+public  String[] getListeCBox(){
+	//String choix
 		String[] retour =new String[1];
 		ArrayList<String>  listeTmp = new ArrayList<String>();
 		for(Collecte collecte:ctrCollecte.CtrCollecte_GetAll()){		
-					if(choix.equals("id")) {
-						listeTmp.add(String.valueOf(collecte.getLieu()));
-					}
+					//if(choix.equals("id")) {
+						listeTmp.add(String.valueOf(collecte.getOrganisateur()));
+					//}
 		}
 		retour = new String[listeTmp.size()];
 		for(int i=0;i<listeTmp.size();i++){
@@ -230,7 +240,7 @@ public void Suprimer() {
 		int cle = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", strCle).get(0).getId();
 		ctrCollecte.CtrCollecte_Enlever(cle);
 
-		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
+		DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox());
 		cmbNom.removeAll();
 		cmbNom.setModel(modelNum);
 		}	
@@ -254,7 +264,7 @@ public void ajouter() {
 		Collecte collecte = new Collecte(Integer.parseInt(strCle),txtType.getText(),txtDateCollecte.getText(),txtOrganisateur.getText());
 		ctrCollecte.CtrCollecte_Enregistrer(collecte);
 
-				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
+				DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox());
 				cmbNom.removeAll();
 				cmbNom.setModel(modelNum);
 
@@ -280,7 +290,7 @@ public void modifierCollecte() {
 	
 			ctrCollecte.CtrCollecte_Modifier(collecteNew);
 	
-			DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox("id"));
+			DefaultComboBoxModel<String> modelNum = new DefaultComboBoxModel<>(getListeCBox());
 			cmbNom.removeAll();
 			cmbNom.setModel(modelNum);
 		}	
@@ -295,13 +305,13 @@ public void modifierCollecte() {
 
 	}
 	public void remplirChamps(String nom) {
-		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", nom).get(0);
+		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_COLLECTE", nom).get(0);
 		cmbLieu.setSelectedItem(String.valueOf(collecte.getLieu()));
 		txtType.setText(collecte.getTypeCollecte());
 		txtDateCollecte.setText(collecte.getDateCollecte());
 		txtOrganisateur.setText(collecte.getOrganisateur());
 	}
-	/*============================================================================================================= */
+/*============================================================================================================= */
 /*										Ecouetuers																*/
 /*============================================================================================================= */
 
@@ -317,7 +327,6 @@ public void modifierCollecte() {
 			Suprimer();
 
 		}else if(ev.getSource()== btnAjouter){
-			//String strCle = JOptionPane.showInputDialog(null, "Entrez le nom du Collecte a ajouter");
 			ajouter();
 
 		}
@@ -326,9 +335,20 @@ public void modifierCollecte() {
 	public void itemStateChanged(ItemEvent e) {
 		if(e.getSource()== cmbNom){
 			String nom = (String)cmbNom.getSelectedItem();
-			DefaultTableModel model = remplirTable("ID_LIEU",nom);
+			DefaultTableModel model = remplirTable("ORGANISATEUR",nom);
 			table.setModel(model);
-			remplirChamps(nom);
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					String lieuChoisi =  model.getValueAt( table.getSelectedRow(),table.getSelectedColumn()).toString();
+					remplirChamps(lieuChoisi);
+					//System.out.println(lieuChoisi);
+					
+				}
+			  });
+			//remplirChamps(nom);
+			viderChamps();
 			
 		}
 	}

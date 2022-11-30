@@ -28,6 +28,5 @@ public final class Application {
         Acceuil acceuil = new Acceuil();
         acceuil.action();
         acceuil.setVisible(true);
-
 }
 }
