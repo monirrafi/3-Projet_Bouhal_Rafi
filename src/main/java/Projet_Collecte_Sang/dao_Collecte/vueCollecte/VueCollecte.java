@@ -24,7 +24,7 @@ public class VueCollecte extends JFrame implements actionEvent{
 	private JTextField txtType;
 	private JTextField txtDateCollecte;
 	private JTextField txtOrganisateur;
-	private JTable table;
+	private JTable table = new JTable();
 
 	JButton btnAjouter = new JButton();
 	JButton btnModifier = new JButton();
@@ -337,6 +337,7 @@ public void modifierCollecte() {
 			String nom = (String)cmbNom.getSelectedItem();
 			DefaultTableModel model = remplirTable("ORGANISATEUR",nom);
 			table.setModel(model);
+			/*
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 				@Override
@@ -348,11 +349,23 @@ public void modifierCollecte() {
 					
 				}
 			  });
-			//remplirChamps(nom);
+			//remplirChamps(nom);*/
 			viderChamps();
 			
 		}
 	}
+	public void valueChanged(ListSelectionEvent e) {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		String lieuChoisi="";
+		lieuChoisi =  model.getValueAt( table.getSelectedRow(),table.getSelectedColumn()).toString();
+		Collecte collecte = ctrCollecte.CtrCollecte_GetByChamps("ID_LIEU", lieuChoisi).get(0);
+		remplirChamps(String.valueOf(collecte.getId()));
+//		table.clearSelection();
+//		table.getSelectionModel().clearSelection();
+		//System.out.println(lieuChoisi);
+		
+	}
+
 	@Override
 	public void action() {
 		cmbNom.addItemListener(this::itemStateChanged);
@@ -360,6 +373,7 @@ public void modifierCollecte() {
 		btnAjouter.addActionListener(this::actionBtn);
 		btnModifier.addActionListener(this::actionBtn);
 		btnSuprimer.addActionListener(this::actionBtn);
+		table.getSelectionModel().addListSelectionListener(this::valueChanged);
 		
 	}
 	public ControleurCollecte getControleur(){

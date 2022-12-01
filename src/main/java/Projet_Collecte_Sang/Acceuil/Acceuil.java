@@ -332,7 +332,8 @@ public DefaultTableModel remplirTable(String champs,String valeur,String obj) {
 				model.addRow(new Object[]{collecte.getLieu(),collecte.getTypeCollecte(),collecte.getDateCollecte(),collecte.getOrganisateur()});				
 			}
 		}
-	return model;
+
+		return model;
 
 }
 

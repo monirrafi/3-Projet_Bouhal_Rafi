@@ -25,8 +25,8 @@ public final class Application {
         VueCollecte vueCollecte = new VueCollecte();
         vueCollecte.action();
         vueCollecte.setVisible(true);*/
-        Acceuil acceuil = new Acceuil();
-        acceuil.action();
-        acceuil.setVisible(true);
-}
+        VueCollecte vueCollecte = new VueCollecte();
+        vueCollecte.action();
+        vueCollecte.setVisible(true);
+    }
 }

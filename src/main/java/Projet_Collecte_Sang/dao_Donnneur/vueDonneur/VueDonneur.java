@@ -5,6 +5,8 @@ import java.awt.event.ItemEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import Projet_Collecte_Sang.actionEvent;
@@ -410,6 +412,17 @@ public void modifierDonneur() {
 			DefaultTableModel model = remplirTable("NUM_ASS_MAL",nom);
 			table.setModel(model);
 			remplirChamps(nom);
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					String donneurChoisi =  model.getValueAt( table.getSelectedRow(),table.getSelectedColumn()).toString();
+					remplirChamps(donneurChoisi);
+					//System.out.println(lieuChoisi);
+					
+				}
+			  });
+
 			
 		}
 	}
