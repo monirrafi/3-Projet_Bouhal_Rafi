@@ -66,7 +66,7 @@ public class Acceuil extends JFrame implements actionEvent{
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel();
-		lblNewLabel_1.setIcon(new ImageIcon("src\\main\\java\\Projet_Collecte_Sang\\Acceuil\\logo1.jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon("src\\main\\java\\Projet_Collecte_Sang\\donnees\\logo1.jpg"));
 		lblNewLabel_1.setBounds(215, 123, 1100, 300);
 		contentPane.add(lblNewLabel_1);
 		

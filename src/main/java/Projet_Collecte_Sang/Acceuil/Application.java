@@ -9,22 +9,6 @@ public final class Application {
     }
 
     public static void main(String[] args) {
-/*
-        Acceuil acceuil = new Acceuil();
-        acceuil.action();
-        acceuil.setVisible(true);
-        VueDonneur donneur = new VueDonneur();
-        donneur.action();
-        donneur.setVisible(true);
-
-       FormulaireUser user = new FormulaireUser();
-        user.action();
-        user.setVisible(true);
-        ConnexionForm   frm = new ConnexionForm();
-        frm.setVisible(true);
-        VueCollecte vueCollecte = new VueCollecte();
-        vueCollecte.action();
-        vueCollecte.setVisible(true);*/
         Acceuil acceuil = new Acceuil();
         acceuil.action();
         acceuil.setVisible(true);
